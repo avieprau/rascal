@@ -11,7 +11,7 @@ public class LooseGitRepository extends GitRepository {
     }
 
     @Override
-    public GitObject putObject(InputStream contentStream) {
+    public GitObject putBlob(InputStream contentStream) {
         return null;
     }
 }

@@ -7,5 +7,5 @@ import java.io.InputStream;
 public abstract class GitRepository {
     public abstract GitObject getObject(String name);
 
-    public abstract GitObject putObject(InputStream contentStream);
+    public abstract GitObject putBlob(InputStream contentStream);
 }
