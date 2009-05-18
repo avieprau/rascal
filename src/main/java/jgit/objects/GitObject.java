@@ -1,5 +1,17 @@
 package jgit.objects;
 
-public abstract class GitObject {
+import java.io.InputStream;
 
+public abstract class GitObject {
+    public String getName() {
+        return null;
+    }
+
+    public InputStream getContentStream() {
+        return null;
+    }
+
+    public long getSize() {
+        return 0;
+    }
 }
