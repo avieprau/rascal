@@ -2,7 +2,8 @@ package jgit.repository;
 
 import org.springframework.stereotype.Component;
 
-@Component
-public class LooseObjectOutputStreamFactory {
+import java.io.OutputStream;
 
+public interface LooseObjectOutputStreamFactory {
+    OutputStream createOutputStream(String objectName);
 }
