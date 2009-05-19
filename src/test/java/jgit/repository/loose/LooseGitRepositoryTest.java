@@ -1,6 +1,8 @@
-package jgit.repository;
+package jgit.repository.loose;
 
 import jgit.AbstractTest;
+import jgit.repository.loose.LooseGitRepository;
+import jgit.repository.loose.LooseObjectOutputStreamFactory;
 import jgit.objects.Blob;
 import jgit.objects.name.ObjectNameResolver;
 import org.junit.Test;

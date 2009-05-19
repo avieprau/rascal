@@ -1,4 +1,4 @@
-package jgit.repository;
+package jgit.repository.loose;
 
 import org.springframework.stereotype.Component;
 

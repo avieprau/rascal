@@ -1,7 +1,8 @@
-package jgit.repository;
+package jgit.repository.packed;
 
 import jgit.objects.GitObject;
 import jgit.objects.Blob;
+import jgit.repository.GitRepository;
 
 import java.io.InputStream;
 import java.io.IOException;

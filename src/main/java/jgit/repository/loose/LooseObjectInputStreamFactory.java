@@ -1,4 +1,4 @@
-package jgit.repository;
+package jgit.repository.loose;
 
 import java.io.InputStream;
 
