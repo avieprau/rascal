@@ -7,13 +7,11 @@ import java.io.InputStream;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PackedGitRepository extends GitRepository {
-    @Override
+public class PackedGitRepository implements GitRepository {
     public GitObject getObject(String name) {
         return null;
     }
 
-    @Override
     public GitObject putBlob(InputStream contentStream) {
         return null;
     }

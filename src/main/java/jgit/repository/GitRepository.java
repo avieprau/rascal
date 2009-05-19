@@ -4,8 +4,8 @@ import jgit.objects.GitObject;
 
 import java.io.InputStream;
 
-public abstract class GitRepository {
-    public abstract GitObject getObject(String name);
+public interface GitRepository {
+    GitObject getObject(String name);
 
-    public abstract GitObject putBlob(InputStream contentStream);
+    GitObject putBlob(InputStream contentStream);
 }
