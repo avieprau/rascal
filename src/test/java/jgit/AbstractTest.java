@@ -6,6 +6,6 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.Mockery;
 
 @RunWith(JMock.class)
-public class AbstractTest {
+public abstract class AbstractTest {
     protected Mockery context = new JUnit4Mockery();
 }

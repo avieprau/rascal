@@ -1,4 +1,4 @@
 package jgit;
 
-public class AbstractIntegrationTest extends AbstractTest {
+public abstract class AbstractIntegrationTest extends AbstractTest {
 }
