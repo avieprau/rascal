@@ -1,11 +1,13 @@
 package jgit.repository;
 
 import jgit.objects.GitObject;
+import jgit.objects.Blob;
 
 import java.io.InputStream;
+import java.io.IOException;
 
 public interface GitRepository {
-    GitObject getObject(String name);
+    GitObject getObject(String name) throws IOException;
 
-    GitObject putBlob(InputStream contentStream);
+    Blob putBlob(InputStream contentStream) throws IOException;
 }
