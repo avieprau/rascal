@@ -2,6 +2,7 @@ package jgit.repository;
 
 import jgit.objects.GitObject;
 import jgit.objects.Blob;
+import jgit.objects.name.ObjectNameResolver;
 
 import java.io.InputStream;
 import java.io.IOException;

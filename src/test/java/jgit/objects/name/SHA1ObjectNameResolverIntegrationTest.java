@@ -1,4 +1,7 @@
-package jgit.repository;
+package jgit.objects.name;
+
+import jgit.objects.name.MessageDigestObjectNameResolver;
+import jgit.objects.name.SHA1ObjectNameResolver;
 
 public class SHA1ObjectNameResolverIntegrationTest extends AbstractMessageDigestObjectNameResolverIntegrationTest {
     @Override

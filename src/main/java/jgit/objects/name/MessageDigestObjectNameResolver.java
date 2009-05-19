@@ -1,4 +1,4 @@
-package jgit.repository;
+package jgit.objects.name;
 
 import org.apache.commons.codec.binary.Hex;
 

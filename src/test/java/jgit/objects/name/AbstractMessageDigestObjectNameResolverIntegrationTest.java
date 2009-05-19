@@ -1,4 +1,4 @@
-package jgit.repository;
+package jgit.objects.name;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.codec.binary.Hex;
 import jgit.AbstractIntegrationTest;
+import jgit.objects.name.MessageDigestObjectNameResolver;
 
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;

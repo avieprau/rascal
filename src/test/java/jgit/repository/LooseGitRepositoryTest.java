@@ -2,6 +2,7 @@ package jgit.repository;
 
 import jgit.AbstractTest;
 import jgit.objects.Blob;
+import jgit.objects.name.ObjectNameResolver;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.Assert;
