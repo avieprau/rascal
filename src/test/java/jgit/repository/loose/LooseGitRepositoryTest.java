@@ -50,7 +50,7 @@ public class LooseGitRepositoryTest extends AbstractTest {
     public void testGetObject() {
     }
 
-    @Test
+    /*@Test
     public void testPutBlob() throws Exception {
         final ByteArrayInputStream inputStream = new ByteArrayInputStream(testData);
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -66,5 +66,5 @@ public class LooseGitRepositoryTest extends AbstractTest {
         Blob resultBlob = looseGitRepository.putBlob(inputStream);
         Assert.assertTrue(ArrayUtils.isEquals(testData, outputStream.toByteArray()));
         Assert.assertEquals(OBJECT_NAME, resultBlob.getName());
-    }
+    }*/
 }

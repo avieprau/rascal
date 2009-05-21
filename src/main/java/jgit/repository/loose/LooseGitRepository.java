@@ -2,6 +2,7 @@ package jgit.repository.loose;
 
 import jgit.objects.GitObject;
 import jgit.objects.Blob;
+import jgit.objects.source.BlobSource;
 import jgit.objects.name.ObjectNameResolver;
 import jgit.repository.GitRepository;
 
@@ -26,7 +27,11 @@ public class LooseGitRepository implements GitRepository {
         return null;
     }
 
-    public Blob putBlob(InputStream contentStream) throws IOException {
+    public Blob addBlob(BlobSource source) throws IOException {
+        return null;
+    }
+
+    /*public Blob putBlob(InputStream contentStream) throws IOException {
         String objectName = objectNameResolver.getObjectName(contentStream);
         OutputStream outputStream = outputStreamFactory.createOutputStream(objectName);
         byte[] buffer = new byte[BUFFER_SIZE];
@@ -37,5 +42,5 @@ public class LooseGitRepository implements GitRepository {
         outputStream.close();
         // TODO: blob creation
         return new Blob(objectName);
-    }
+    }*/
 }

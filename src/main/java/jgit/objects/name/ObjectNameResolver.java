@@ -1,8 +1,9 @@
 package jgit.objects.name;
 
-import java.io.InputStream;
+import jgit.objects.source.BlobSource;
+
 import java.io.IOException;
 
 public interface ObjectNameResolver {
-    String getObjectName(InputStream contentStream) throws IOException;
+    String getBlobName(BlobSource source) throws IOException;
 }

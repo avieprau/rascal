@@ -2,14 +2,15 @@ package jgit.objects.name;
 
 import org.apache.commons.codec.binary.Hex;
 
-import java.io.InputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.nio.channels.WritableByteChannel;
+import java.nio.ByteBuffer;
+
+import jgit.objects.source.BlobSource;
 
 public abstract class MessageDigestObjectNameResolver implements ObjectNameResolver {
-    private final int BUFFER_SIZE = 1024 * 1024 * 4;
-
     protected abstract String getAlgorithmName();
 
     protected MessageDigest getMessageDigest() {
@@ -20,17 +21,32 @@ public abstract class MessageDigestObjectNameResolver implements ObjectNameResol
         }
     }
 
-    private byte[] getObjectHash(InputStream contentStream) throws IOException {
-        MessageDigest digest = getMessageDigest();
-        byte[] buffer = new byte[BUFFER_SIZE];
-        int len;
-        while ((len = contentStream.read(buffer)) > 0) {
-            digest.update(buffer, 0, len);
-        }
+    private byte[] getBlobHash(BlobSource source) throws IOException {
+        final MessageDigest digest = getMessageDigest();
+        source.copyTo(new WritableByteChannel() {
+            public int write(ByteBuffer src) throws IOException {
+                byte[] bytes;
+                if (src.hasArray()) {
+                    bytes = src.array();
+                } else {
+                    bytes = new byte[src.remaining()];
+                    src.get(bytes);
+                }
+                digest.update(bytes);
+                return bytes.length;
+            }
+
+            public boolean isOpen() {
+                return true;
+            }
+
+            public void close() throws IOException {
+            }
+        });
         return digest.digest();
     }
 
-    public String getObjectName(InputStream contentStream) throws IOException {
-        return String.valueOf(Hex.encodeHex(getObjectHash(contentStream)));
+    public String getBlobName(BlobSource source) throws IOException {
+        return String.valueOf(Hex.encodeHex(getBlobHash(source)));
     }
 }
