@@ -1,46 +1,8 @@
 package jgit.repository.loose;
 
-import jgit.objects.GitObject;
-import jgit.objects.Blob;
-import jgit.objects.source.BlobSource;
-import jgit.objects.name.ObjectNameResolver;
-import jgit.repository.GitRepository;
-
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
+import jgit.repository.AbstractGitRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Component
-public class LooseGitRepository implements GitRepository {
-    private static final int BUFFER_SIZE = 1024 * 1024 * 4;
-
-    @Autowired
-    private ObjectNameResolver objectNameResolver;
-
-    @Autowired
-    private LooseObjectOutputStreamFactory outputStreamFactory;
-
-    public GitObject getObject(String name) throws IOException {
-        return null;
-    }
-
-    public Blob addBlob(BlobSource source) throws IOException {
-        return null;
-    }
-
-    /*public Blob putBlob(InputStream contentStream) throws IOException {
-        String objectName = objectNameResolver.getObjectName(contentStream);
-        OutputStream outputStream = outputStreamFactory.createOutputStream(objectName);
-        byte[] buffer = new byte[BUFFER_SIZE];
-        int len;
-        while ((len = contentStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, len);
-        }
-        outputStream.close();
-        // TODO: blob creation
-        return new Blob(objectName);
-    }*/
+public class LooseGitRepository extends AbstractGitRepository {
 }
