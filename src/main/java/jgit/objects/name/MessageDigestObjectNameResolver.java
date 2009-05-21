@@ -25,15 +25,9 @@ public abstract class MessageDigestObjectNameResolver implements ObjectNameResol
         final MessageDigest digest = getMessageDigest();
         source.copyTo(new WritableByteChannel() {
             public int write(ByteBuffer src) throws IOException {
-                byte[] bytes;
-                if (src.hasArray()) {
-                    bytes = src.array();
-                } else {
-                    bytes = new byte[src.remaining()];
-                    src.get(bytes);
-                }
-                digest.update(bytes);
-                return bytes.length;
+                int n = src.remaining();
+                digest.update(src);
+                return n;
             }
 
             public boolean isOpen() {
