@@ -1,7 +1,8 @@
 package jgit.repository;
 
 import jgit.AbstractTest;
-import jgit.objects.Blob;
+import jgit.objects.GitObject;
+import jgit.objects.storage.GitObjectStorage;
 import jgit.objects.name.ObjectNameResolver;
 import jgit.objects.source.BlobSource;
 import org.jmock.Expectations;
@@ -49,7 +50,7 @@ public abstract class AbstractGitRepositoryTest extends AbstractTest {
                 oneOf(sourceMock).copyTo(storageChannelMock);
             }
         });
-        Blob resultBlob = gitRepository.addBlob(sourceMock);
+        GitObject resultBlob = gitRepository.addBlob(sourceMock);
         Assert.assertEquals(OBJECT_NAME, resultBlob.getName());
     }
 }

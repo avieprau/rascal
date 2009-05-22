@@ -1,7 +1,8 @@
 package jgit.repository;
 
-import jgit.objects.Blob;
 import jgit.objects.GitObject;
+import jgit.objects.GitObjectType;
+import jgit.objects.storage.GitObjectStorage;
 import jgit.objects.name.ObjectNameResolver;
 import jgit.objects.source.BlobSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,10 @@ public abstract class AbstractGitRepository implements GitRepository {
         return null;
     }
 
-    public Blob addBlob(BlobSource source) throws IOException {
+    public GitObject addBlob(BlobSource source) throws IOException {
         String objectName = objectNameResolver.getBlobName(source);
         source.copyTo(objectStorage.getWritableChannel(objectName));
-        return new Blob(objectName);
+        // TODO: channel for blob
+        return new GitObject(objectName, GitObjectType.BLOB, null);
     }
 }

@@ -1,23 +1,29 @@
 package jgit.objects;
 
-import java.io.InputStream;
+import java.nio.channels.ReadableByteChannel;
 
-public abstract class GitObject {
+public class GitObject {
     private String name;
 
-    protected GitObject(String name) {
+    private GitObjectType type;
+
+    private ReadableByteChannel channel;
+
+    public GitObject(String name, GitObjectType type, ReadableByteChannel channel) {
         this.name = name;
+        this.type = type;
+        this.channel = channel;
     }
 
     public String getName() {
         return name;
     }
 
-    public InputStream getContentStream() {
-        return null;
+    public GitObjectType getType() {
+        return type;
     }
 
-    public long getSize() {
-        return 0;
+    public ReadableByteChannel getChannel() {
+        return channel;
     }
 }

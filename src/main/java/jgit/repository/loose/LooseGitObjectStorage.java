@@ -1,6 +1,6 @@
 package jgit.repository.loose;
 
-import jgit.repository.GitObjectStorage;
+import jgit.objects.storage.GitObjectStorage;
 
 import java.nio.channels.WritableByteChannel;
 import java.nio.channels.ReadableByteChannel;
