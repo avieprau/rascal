@@ -40,13 +40,13 @@ public abstract class AbstractGitRepositoryTest extends AbstractTest {
         final WritableByteChannel storageChannelMock = context.mock(WritableByteChannel.class);
         context.checking(new Expectations() {
             {
-                one(objectNameResolverMock).getBlobName(sourceMock);
+                oneOf(objectNameResolverMock).getBlobName(sourceMock);
                 will(returnValue(OBJECT_NAME));
 
-                one(objectStorageMock).getWritableChannel(OBJECT_NAME);
+                oneOf(objectStorageMock).getWritableChannel(OBJECT_NAME);
                 will(returnValue(storageChannelMock));
 
-                one(sourceMock).copyTo(storageChannelMock);
+                oneOf(sourceMock).copyTo(storageChannelMock);
             }
         });
         Blob resultBlob = gitRepository.addBlob(sourceMock);

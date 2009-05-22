@@ -1,8 +1,13 @@
 package jgit.objects.source;
 
+import jgit.objects.GitObjectType;
+
 import java.nio.channels.WritableByteChannel;
 import java.nio.channels.FileChannel;
+import java.nio.ByteBuffer;
 import java.io.IOException;
+
+import org.apache.commons.lang.ArrayUtils;
 
 public class FileChannelBlobSource implements BlobSource {
     private FileChannel source;
@@ -12,6 +17,9 @@ public class FileChannelBlobSource implements BlobSource {
     }
 
     public void copyTo(WritableByteChannel destination) throws IOException {
+        String headerString = String.format("%s %d", GitObjectType.BLOB, source.size());
+        byte[] header = ArrayUtils.add(headerString.getBytes(), (byte) 0);
+        destination.write(ByteBuffer.wrap(header));
         source.transferTo(0, source.size(), destination);
     }
 }
