@@ -1,19 +1,19 @@
 package jgit.storage;
 
 import jgit.object.GitObject;
-import jgit.object.storage.GitObjectStorageNode;
+import jgit.object.storage.ObjectStorageNode;
 import jgit.object.name.ObjectNameResolver;
 import jgit.object.source.ObjectSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-public abstract class AbstractGitStorage implements GitStorage {
+public abstract class AbstractStorage implements Storage {
     @Autowired
     private ObjectNameResolver objectNameResolver;
 
     @Autowired
-    private GitObjectStorageNode objectStorageNode;
+    private ObjectStorageNode objectStorageNode;
 
     public GitObject getObject(String name) throws IOException {
         return null;

@@ -2,7 +2,7 @@ package jgit.storage;
 
 import jgit.AbstractTest;
 import jgit.object.GitObject;
-import jgit.object.storage.GitObjectStorageNode;
+import jgit.object.storage.ObjectStorageNode;
 import jgit.object.name.ObjectNameResolver;
 import jgit.object.source.ObjectSource;
 import org.jmock.Expectations;
@@ -13,26 +13,26 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.nio.channels.WritableByteChannel;
 
-public abstract class AbstractGitStorageTest extends AbstractTest {
-    private AbstractGitStorage gitStorage;
+public abstract class AbstractStorageTest extends AbstractTest {
+    private AbstractStorage storage;
 
     private ObjectSource sourceMock;
 
-    private GitObjectStorageNode objectStorageNodeMock;
+    private ObjectStorageNode objectStorageNodeMock;
 
     private ObjectNameResolver objectNameResolverMock;
 
     private static final String OBJECT_NAME = "1f25";
 
-    protected abstract AbstractGitStorage getGitStorage();
+    protected abstract AbstractStorage getStorage();
 
     @Before
     public void setUp() throws Exception {
-        gitStorage = getGitStorage();
-        objectStorageNodeMock = context.mock(GitObjectStorageNode.class);
-        ReflectionTestUtils.setField(gitStorage, "objectStorageNode", objectStorageNodeMock);
+        storage = getStorage();
+        objectStorageNodeMock = context.mock(ObjectStorageNode.class);
+        ReflectionTestUtils.setField(storage, "objectStorageNode", objectStorageNodeMock);
         objectNameResolverMock = context.mock(ObjectNameResolver.class);
-        ReflectionTestUtils.setField(gitStorage, "objectNameResolver", objectNameResolverMock);
+        ReflectionTestUtils.setField(storage, "objectNameResolver", objectNameResolverMock);
         sourceMock = context.mock(ObjectSource.class);
     }
 
@@ -50,7 +50,7 @@ public abstract class AbstractGitStorageTest extends AbstractTest {
                 oneOf(sourceMock).copyTo(storageChannelMock);
             }
         });
-        GitObject resultObject = gitStorage.addObject(sourceMock);
+        GitObject resultObject = storage.addObject(sourceMock);
         Assert.assertEquals(OBJECT_NAME, resultObject.getName());
     }
 }
