@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.nio.channels.WritableByteChannel;
 import java.nio.ByteBuffer;
 
-import jgit.object.source.BlobSource;
+import jgit.object.source.ObjectSource;
 
 public abstract class MessageDigestObjectNameResolver implements ObjectNameResolver {
     protected abstract String getAlgorithmName();
@@ -21,7 +21,7 @@ public abstract class MessageDigestObjectNameResolver implements ObjectNameResol
         }
     }
 
-    private byte[] getBlobHash(BlobSource source) throws IOException {
+    private byte[] getObjectHash(ObjectSource source) throws IOException {
         final MessageDigest digest = getMessageDigest();
         source.copyTo(new WritableByteChannel() {
             public int write(ByteBuffer src) throws IOException {
@@ -40,7 +40,7 @@ public abstract class MessageDigestObjectNameResolver implements ObjectNameResol
         return digest.digest();
     }
 
-    public String getBlobName(BlobSource source) throws IOException {
-        return String.valueOf(Hex.encodeHex(getBlobHash(source)));
+    public String getObjectName(ObjectSource source) throws IOException {
+        return String.valueOf(Hex.encodeHex(getObjectHash(source)));
     }
 }

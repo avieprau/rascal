@@ -4,7 +4,8 @@ import jgit.storage.AbstractGitStorageTest;
 import jgit.storage.AbstractGitStorage;
 
 public class LooseGitStorageTest extends AbstractGitStorageTest {
-    protected AbstractGitStorage getGitRepository() {
+    @Override
+    protected AbstractGitStorage getGitStorage() {
         return new LooseGitStorage();
     }
 }

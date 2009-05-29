@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import org.apache.commons.lang.ArrayUtils;
 
-public class FileChannelBlobSource implements BlobSource {
+public class FileChannelBlobSource implements ObjectSource {
     private FileChannel source;
 
     public FileChannelBlobSource(FileChannel source) {

@@ -25,9 +25,9 @@ public abstract class AbstractMessageDigestObjectNameResolverIntegrationTest
     @Test
     public void testGetBlobName() throws Exception {
         FileChannel tempFileChannel = new FileInputStream(tempFile).getChannel();
-        String blobName = objectNameResolver.getBlobName(new FileChannelBlobSource(tempFileChannel));
+        String objectName = objectNameResolver.getObjectName(new FileChannelBlobSource(tempFileChannel));
         MessageDigest digest = objectNameResolver.getMessageDigest();
         digest.update(testData);
-        Assert.assertEquals(String.valueOf(Hex.encodeHex(digest.digest())), blobName);
+        Assert.assertEquals(String.valueOf(Hex.encodeHex(digest.digest())), objectName);
     }
 }
