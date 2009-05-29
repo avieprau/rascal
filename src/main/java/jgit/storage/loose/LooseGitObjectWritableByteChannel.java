@@ -1,4 +1,4 @@
-package jgit.repository.loose;
+package jgit.storage.loose;
 
 import java.nio.channels.WritableByteChannel;
 import java.nio.channels.FileChannel;

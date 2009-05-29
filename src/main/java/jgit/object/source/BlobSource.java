@@ -1,4 +1,4 @@
-package jgit.objects.source;
+package jgit.object.source;
 
 import java.nio.channels.WritableByteChannel;
 import java.io.IOException;

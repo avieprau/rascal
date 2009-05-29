@@ -1,4 +1,4 @@
-package jgit.objects.name;
+package jgit.object.name;
 
 import org.springframework.stereotype.Component;
 

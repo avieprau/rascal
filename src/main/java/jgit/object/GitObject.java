@@ -1,4 +1,4 @@
-package jgit.objects;
+package jgit.object;
 
 import java.nio.channels.ReadableByteChannel;
 

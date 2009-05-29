@@ -1,6 +1,6 @@
-package jgit.objects.name;
+package jgit.object.name;
 
-import jgit.objects.source.BlobSource;
+import jgit.object.source.BlobSource;
 
 import java.io.IOException;
 

@@ -1,15 +1,15 @@
-package jgit.repository;
+package jgit.storage;
 
-import jgit.objects.GitObject;
-import jgit.objects.GitObjectType;
-import jgit.objects.storage.GitObjectStorage;
-import jgit.objects.name.ObjectNameResolver;
-import jgit.objects.source.BlobSource;
+import jgit.object.GitObject;
+import jgit.object.GitObjectType;
+import jgit.object.storage.GitObjectStorage;
+import jgit.object.name.ObjectNameResolver;
+import jgit.object.source.BlobSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-public abstract class AbstractGitRepository implements GitRepository {
+public abstract class AbstractGitStorage implements GitStorage {
     @Autowired
     private ObjectNameResolver objectNameResolver;
 

@@ -1,4 +1,4 @@
-package jgit.objects.name;
+package jgit.object.name;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.nio.channels.WritableByteChannel;
 import java.nio.ByteBuffer;
 
-import jgit.objects.source.BlobSource;
+import jgit.object.source.BlobSource;
 
 public abstract class MessageDigestObjectNameResolver implements ObjectNameResolver {
     protected abstract String getAlgorithmName();

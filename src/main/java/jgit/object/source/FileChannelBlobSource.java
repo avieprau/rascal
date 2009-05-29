@@ -1,6 +1,6 @@
-package jgit.objects.source;
+package jgit.object.source;
 
-import jgit.objects.GitObjectType;
+import jgit.object.GitObjectType;
 
 import java.nio.channels.WritableByteChannel;
 import java.nio.channels.FileChannel;

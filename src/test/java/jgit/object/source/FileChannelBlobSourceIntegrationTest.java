@@ -1,7 +1,7 @@
-package jgit.objects.source;
+package jgit.object.source;
 
 import jgit.AbstractTempFileWithRandomDataIntegrationTest;
-import jgit.objects.GitObjectType;
+import jgit.object.GitObjectType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;

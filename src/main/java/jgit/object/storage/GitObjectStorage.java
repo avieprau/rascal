@@ -1,4 +1,4 @@
-package jgit.objects.storage;
+package jgit.object.storage;
 
 import java.nio.channels.WritableByteChannel;
 import java.nio.channels.ReadableByteChannel;

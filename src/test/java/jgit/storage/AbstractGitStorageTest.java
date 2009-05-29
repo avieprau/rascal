@@ -1,10 +1,10 @@
-package jgit.repository;
+package jgit.storage;
 
 import jgit.AbstractTest;
-import jgit.objects.GitObject;
-import jgit.objects.storage.GitObjectStorage;
-import jgit.objects.name.ObjectNameResolver;
-import jgit.objects.source.BlobSource;
+import jgit.object.GitObject;
+import jgit.object.storage.GitObjectStorage;
+import jgit.object.name.ObjectNameResolver;
+import jgit.object.source.BlobSource;
 import org.jmock.Expectations;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,8 +13,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.nio.channels.WritableByteChannel;
 
-public abstract class AbstractGitRepositoryTest extends AbstractTest {
-    private AbstractGitRepository gitRepository;
+public abstract class AbstractGitStorageTest extends AbstractTest {
+    private AbstractGitStorage gitRepository;
 
     private BlobSource sourceMock;
 
@@ -24,7 +24,7 @@ public abstract class AbstractGitRepositoryTest extends AbstractTest {
 
     private static final String OBJECT_NAME = "1f25";
 
-    protected abstract AbstractGitRepository getGitRepository();
+    protected abstract AbstractGitStorage getGitRepository();
 
     @Before
     public void setUp() throws Exception {
