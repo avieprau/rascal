@@ -2,7 +2,7 @@ package jgit.storage;
 
 import jgit.AbstractTest;
 import jgit.object.GitObject;
-import jgit.object.storage.GitObjectStorage;
+import jgit.object.storage.GitObjectStorageNode;
 import jgit.object.name.ObjectNameResolver;
 import jgit.object.source.BlobSource;
 import org.jmock.Expectations;
@@ -18,7 +18,7 @@ public abstract class AbstractGitStorageTest extends AbstractTest {
 
     private BlobSource sourceMock;
 
-    private GitObjectStorage objectStorageMock;
+    private GitObjectStorageNode objectStorageMockNode;
 
     private ObjectNameResolver objectNameResolverMock;
 
@@ -29,8 +29,8 @@ public abstract class AbstractGitStorageTest extends AbstractTest {
     @Before
     public void setUp() throws Exception {
         gitRepository = getGitRepository();
-        objectStorageMock = context.mock(GitObjectStorage.class);
-        ReflectionTestUtils.setField(gitRepository, "objectStorage", objectStorageMock);
+        objectStorageMockNode = context.mock(GitObjectStorageNode.class);
+        ReflectionTestUtils.setField(gitRepository, "objectStorage", objectStorageMockNode);
         objectNameResolverMock = context.mock(ObjectNameResolver.class);
         ReflectionTestUtils.setField(gitRepository, "objectNameResolver", objectNameResolverMock);
         sourceMock = context.mock(BlobSource.class);
@@ -44,7 +44,7 @@ public abstract class AbstractGitStorageTest extends AbstractTest {
                 oneOf(objectNameResolverMock).getBlobName(sourceMock);
                 will(returnValue(OBJECT_NAME));
 
-                oneOf(objectStorageMock).getWritableChannel(OBJECT_NAME);
+                oneOf(objectStorageMockNode).getWritableChannel(OBJECT_NAME);
                 will(returnValue(storageChannelMock));
 
                 oneOf(sourceMock).copyTo(storageChannelMock);

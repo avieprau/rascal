@@ -1,12 +1,12 @@
 package jgit.storage.loose;
 
-import jgit.object.storage.GitObjectStorage;
+import jgit.object.storage.GitObjectStorageNode;
 
 import java.nio.channels.WritableByteChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.io.IOException;
 
-public class LooseGitObjectStorageNode implements GitObjectStorage {
+public class LooseGitObjectStorageNode implements GitObjectStorageNode {
     public WritableByteChannel getWritableChannel(String objectName) throws IOException {
         return null;
     }

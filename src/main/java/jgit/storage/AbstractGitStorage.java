@@ -2,7 +2,7 @@ package jgit.storage;
 
 import jgit.object.GitObject;
 import jgit.object.GitObjectType;
-import jgit.object.storage.GitObjectStorage;
+import jgit.object.storage.GitObjectStorageNode;
 import jgit.object.name.ObjectNameResolver;
 import jgit.object.source.BlobSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public abstract class AbstractGitStorage implements GitStorage {
     private ObjectNameResolver objectNameResolver;
 
     @Autowired
-    private GitObjectStorage objectStorage;
+    private GitObjectStorageNode objectStorageNode;
 
     public GitObject getObject(String name) throws IOException {
         return null;
@@ -22,7 +22,7 @@ public abstract class AbstractGitStorage implements GitStorage {
 
     public GitObject addBlob(BlobSource source) throws IOException {
         String objectName = objectNameResolver.getBlobName(source);
-        source.copyTo(objectStorage.getWritableChannel(objectName));
+        source.copyTo(objectStorageNode.getWritableChannel(objectName));
         // TODO: channel for blob
         return new GitObject(objectName, GitObjectType.BLOB, null);
     }
