@@ -2,7 +2,6 @@ package jgit.storage;
 
 import jgit.AbstractTest;
 import jgit.object.GitObject;
-import jgit.object.storage.ObjectStorageNode;
 import jgit.object.name.ObjectNameResolver;
 import jgit.object.source.ObjectSource;
 import org.jmock.Expectations;

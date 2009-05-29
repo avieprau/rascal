@@ -1,8 +1,8 @@
-package jgit.object.storage;
+package jgit.storage;
 
-import java.nio.channels.WritableByteChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.io.IOException;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 
 public interface ObjectStorageNode {
     WritableByteChannel getWritableChannel(String objectName) throws IOException;

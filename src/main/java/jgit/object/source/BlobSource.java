@@ -1,12 +1,11 @@
 package jgit.object.source;
 
 import jgit.object.GitObjectType;
-
-import java.nio.channels.WritableByteChannel;
-import java.nio.ByteBuffer;
-import java.io.IOException;
-
 import org.apache.commons.lang.ArrayUtils;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.WritableByteChannel;
 
 public abstract class BlobSource implements ObjectSource {
     protected abstract long getBlobSize() throws IOException;

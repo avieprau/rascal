@@ -1,8 +1,8 @@
 package jgit.object.name;
 
 import jgit.AbstractTempFileWithRandomDataIntegrationTest;
-import jgit.object.source.FileChannelBlobSource;
 import jgit.object.GitObjectType;
+import jgit.object.source.FileChannelBlobSource;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Before;

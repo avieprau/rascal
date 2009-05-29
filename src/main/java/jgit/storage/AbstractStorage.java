@@ -1,7 +1,6 @@
 package jgit.storage;
 
 import jgit.object.GitObject;
-import jgit.object.storage.ObjectStorageNode;
 import jgit.object.name.ObjectNameResolver;
 import jgit.object.source.ObjectSource;
 import org.springframework.beans.factory.annotation.Autowired;

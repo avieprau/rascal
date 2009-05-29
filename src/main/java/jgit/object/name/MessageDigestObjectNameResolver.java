@@ -1,14 +1,13 @@
 package jgit.object.name;
 
+import jgit.object.source.ObjectSource;
 import org.apache.commons.codec.binary.Hex;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.WritableByteChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.nio.channels.WritableByteChannel;
-import java.nio.ByteBuffer;
-
-import jgit.object.source.ObjectSource;
 
 public abstract class MessageDigestObjectNameResolver implements ObjectNameResolver {
     protected abstract String getAlgorithmName();

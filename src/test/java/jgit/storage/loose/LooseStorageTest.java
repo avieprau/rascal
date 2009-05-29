@@ -1,7 +1,7 @@
 package jgit.storage.loose;
 
-import jgit.storage.AbstractStorageTest;
 import jgit.storage.AbstractStorage;
+import jgit.storage.AbstractStorageTest;
 
 public class LooseStorageTest extends AbstractStorageTest {
     @Override

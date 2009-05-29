@@ -2,13 +2,13 @@ package jgit.object.source;
 
 import jgit.AbstractTempFileWithRandomDataIntegrationTest;
 import jgit.object.GitObjectType;
+import org.apache.commons.lang.ArrayUtils;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
-import org.apache.commons.lang.ArrayUtils;
 
-import java.io.FileInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.nio.channels.Channels;
 
 public class FileChannelBlobSourceIntegrationTest extends AbstractTempFileWithRandomDataIntegrationTest {

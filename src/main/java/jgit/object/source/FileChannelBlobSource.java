@@ -1,8 +1,8 @@
 package jgit.object.source;
 
-import java.nio.channels.WritableByteChannel;
-import java.nio.channels.FileChannel;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.channels.WritableByteChannel;
 
 public class FileChannelBlobSource extends BlobSource {
     private FileChannel source;
