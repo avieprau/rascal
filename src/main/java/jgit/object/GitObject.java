@@ -1,18 +1,21 @@
 package jgit.object;
 
+import jgit.storage.ReadableChannelFactory;
+
 import java.nio.channels.ReadableByteChannel;
+import java.io.IOException;
 
 public class GitObject {
     private String name;
 
     private GitObjectType type;
 
-    private ReadableByteChannel channel;
+    private ReadableChannelFactory channelFactory;
 
-    public GitObject(String name, GitObjectType type, ReadableByteChannel channel) {
+    public GitObject(String name, GitObjectType type, ReadableChannelFactory channelFactory) {
         this.name = name;
         this.type = type;
-        this.channel = channel;
+        this.channelFactory = channelFactory;
     }
 
     public String getName() {
@@ -23,7 +26,7 @@ public class GitObject {
         return type;
     }
 
-    public ReadableByteChannel getChannel() {
-        return channel;
+    public ReadableByteChannel createChannel() throws IOException {
+        return channelFactory.createChannel();
     }
 }

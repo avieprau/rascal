@@ -8,31 +8,28 @@ import org.jmock.Expectations;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.nio.channels.WritableByteChannel;
 
 public abstract class AbstractStorageTest extends AbstractTest {
-    private AbstractStorage storage;
+    protected ObjectSource sourceMock;
 
-    private ObjectSource sourceMock;
+    protected ObjectNameResolver objectNameResolverMock;
 
-    private ObjectStorageNode objectStorageNodeMock;
+    protected ReadableChannelFactory readableChannelFactoryMock;
 
-    private ObjectNameResolver objectNameResolverMock;
+    protected WritableChannelFactory writableChannelFactoryMock;
 
     private static final String OBJECT_NAME = "1f25";
 
     protected abstract AbstractStorage getStorage();
 
     @Before
-    public void setUp() throws Exception {
-        storage = getStorage();
-        objectStorageNodeMock = context.mock(ObjectStorageNode.class);
-        ReflectionTestUtils.setField(storage, "objectStorageNode", objectStorageNodeMock);
+    public void setUpMocks() throws Exception {
         objectNameResolverMock = context.mock(ObjectNameResolver.class);
-        ReflectionTestUtils.setField(storage, "objectNameResolver", objectNameResolverMock);
         sourceMock = context.mock(ObjectSource.class);
+        readableChannelFactoryMock = context.mock(ReadableChannelFactory.class);
+        writableChannelFactoryMock = context.mock(WritableChannelFactory.class);
     }
 
     @Test
@@ -43,13 +40,13 @@ public abstract class AbstractStorageTest extends AbstractTest {
                 oneOf(objectNameResolverMock).getObjectName(sourceMock);
                 will(returnValue(OBJECT_NAME));
 
-                oneOf(objectStorageNodeMock).getWritableChannel(OBJECT_NAME);
+                oneOf(writableChannelFactoryMock).createChannel();
                 will(returnValue(storageChannelMock));
 
                 oneOf(sourceMock).copyTo(storageChannelMock);
             }
         });
-        GitObject resultObject = storage.addObject(sourceMock);
+        GitObject resultObject = getStorage().addObject(sourceMock);
         Assert.assertEquals(OBJECT_NAME, resultObject.getName());
     }
 }

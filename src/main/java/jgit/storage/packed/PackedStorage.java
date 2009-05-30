@@ -1,8 +1,21 @@
 package jgit.storage.packed;
 
 import jgit.storage.AbstractStorage;
-import org.springframework.stereotype.Component;
+import jgit.storage.ReadableChannelFactory;
+import jgit.storage.WritableChannelFactory;
+import jgit.object.name.ObjectNameResolver;
 
-@Component
+
 public class PackedStorage extends AbstractStorage {
+    public PackedStorage(ObjectNameResolver objectNameResolver) {
+        super(objectNameResolver);
+    }
+
+    protected ReadableChannelFactory getReadableChannelFactory(String objectName) {
+        return null;
+    }
+
+    protected WritableChannelFactory getWritableChannelFactory(String objectName) {
+        return null;
+    }
 }
