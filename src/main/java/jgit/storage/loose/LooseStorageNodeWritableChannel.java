@@ -1,6 +1,6 @@
 package jgit.storage.loose;
 
-import org.apache.commons.lang.math.RandomUtils;
+import org.apache.commons.lang.RandomStringUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,7 +12,9 @@ import java.nio.channels.WritableByteChannel;
 class LooseStorageNodeWritableChannel implements WritableByteChannel {
     private static final int OBJECT_DIR_NAME_LENGTH = 2;
 
-    private static final String TEMP_FILE_NAME_FORMAT = "temp_obj_%d";
+    private static final String TEMP_FILE_NAME_PREFIX = "temp_obj_";
+
+    private static final int TEMP_FILE_NAME_SUFFEX_LENGTH = 6;
 
     private LooseStorageLayout storageLayout;
 
@@ -31,7 +33,8 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
                 throw new IOException("Can't create object directory");
             }
         }
-        tempObjectFile = new File(objectDir, String.format(TEMP_FILE_NAME_FORMAT, RandomUtils.nextInt()));
+        tempObjectFile = new File(objectDir,
+                TEMP_FILE_NAME_PREFIX + RandomStringUtils.randomNumeric(TEMP_FILE_NAME_SUFFEX_LENGTH));
         if (!tempObjectFile.createNewFile()) {
             throw new IOException("Can't create temp file for object");
         }
