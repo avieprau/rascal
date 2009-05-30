@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class LooseGitObjectWritableByteChannelTest extends AbstractIntegrationTest {
+public class LooseStorageNodeWritableChannelTest extends AbstractIntegrationTest {
     private static final String TEMP_DIR_NAME_PREFIX = "jgit_test_";
 
     private static final int TEMP_DIR_SUFFIX_LENGTH = 6;
@@ -68,8 +68,8 @@ public class LooseGitObjectWritableByteChannelTest extends AbstractIntegrationTe
 
     @Test
     public void testWrite() throws IOException {
-        LooseGitObjectWritableByteChannel channel
-                = new LooseGitObjectWritableByteChannel(new LooseStorageLayoutMock(), objectName);
+        LooseStorageNodeWritableChannel channel
+                = new LooseStorageNodeWritableChannel(new LooseStorageLayoutMock(), objectName);
         Assert.assertTrue("Channel should be open", channel.isOpen());
         Assert.assertEquals(testData.length, channel.write(ByteBuffer.wrap(testData)));
         channel.close();
@@ -84,8 +84,8 @@ public class LooseGitObjectWritableByteChannelTest extends AbstractIntegrationTe
     public void testWriteWithExistingObjectDirectory() throws IOException {
         File objectDir = new File(tempDir, objectName.substring(0, 2));
         Assert.assertTrue(objectDir.mkdir());
-        LooseGitObjectWritableByteChannel channel
-                = new LooseGitObjectWritableByteChannel(new LooseStorageLayoutMock(), objectName);
+        LooseStorageNodeWritableChannel channel
+                = new LooseStorageNodeWritableChannel(new LooseStorageLayoutMock(), objectName);
         channel.write(ByteBuffer.wrap(testData));
         channel.close();
     }

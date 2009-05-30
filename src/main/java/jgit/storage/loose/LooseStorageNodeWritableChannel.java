@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
 
-class LooseGitObjectWritableByteChannel implements WritableByteChannel {
+class LooseStorageNodeWritableChannel implements WritableByteChannel {
     private static final int OBJECT_DIR_NAME_LENGTH = 2;
 
     private static final String TEMP_FILE_NAME_FORMAT = "temp_obj_%d";
@@ -39,7 +39,7 @@ class LooseGitObjectWritableByteChannel implements WritableByteChannel {
         tempObjectFileChannel = new FileOutputStream(tempObjectFile).getChannel();
     }
 
-    LooseGitObjectWritableByteChannel(LooseStorageLayout storageLayout, String objectName) throws IOException {
+    LooseStorageNodeWritableChannel(LooseStorageLayout storageLayout, String objectName) throws IOException {
         this.storageLayout = storageLayout;
         this.objectName = objectName;
         initObjectFile();
