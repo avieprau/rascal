@@ -7,8 +7,14 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 
 public class LooseObjectStorageNode implements ObjectStorageNode {
+    private LooseStorageLayout storageLayout;
+
+    public LooseObjectStorageNode(LooseStorageLayout storageLayout) {
+        this.storageLayout = storageLayout;
+    }
+
     public WritableByteChannel getWritableChannel(String objectName) throws IOException {
-        return null;
+        return new LooseStorageNodeWritableChannel(storageLayout, objectName);
     }
 
     public ReadableByteChannel getReadableChannel(String objectName) throws IOException {
