@@ -31,6 +31,13 @@ public class LooseGitObjectWritableByteChannelTest extends AbstractIntegrationTe
 
     private String objectName;
 
+    private class LooseStorageLayoutMock extends DefaultLooseStorageLayout {
+        @Override
+        public File getObjectsDir() {
+            return tempDir;
+        }
+    }
+
     @Before
     public void setUpObjectName() {
         objectName = RandomStringUtils.random(OBJECT_NAME_LENGTH, OBJECT_NAME_CHARS);
@@ -60,14 +67,9 @@ public class LooseGitObjectWritableByteChannelTest extends AbstractIntegrationTe
     }
 
     @Test
-    public void testWriteToCannel() throws IOException {
+    public void testWrite() throws IOException {
         LooseGitObjectWritableByteChannel channel
-                = new LooseGitObjectWritableByteChannel(new DefaultLooseStorageLayout() {
-            @Override
-            public File getObjectsDir() {
-                return tempDir;
-            }
-        }, objectName);
+                = new LooseGitObjectWritableByteChannel(new LooseStorageLayoutMock(), objectName);
         Assert.assertTrue("Channel should be open", channel.isOpen());
         Assert.assertEquals(testData.length, channel.write(ByteBuffer.wrap(testData)));
         channel.close();
@@ -76,5 +78,15 @@ public class LooseGitObjectWritableByteChannelTest extends AbstractIntegrationTe
         File objectFile = new File(objectDir, objectName.substring(2));
         Assert.assertTrue("Object file should exist", objectFile.isFile());
         Assert.assertTrue(ArrayUtils.isEquals(FileUtils.readFileToByteArray(objectFile), testData));
+    }
+
+    @Test
+    public void testWriteWithExistingObjectDirectory() throws IOException {
+        File objectDir = new File(tempDir, objectName.substring(0, 2));
+        Assert.assertTrue(objectDir.mkdir());
+        LooseGitObjectWritableByteChannel channel
+                = new LooseGitObjectWritableByteChannel(new LooseStorageLayoutMock(), objectName);
+        channel.write(ByteBuffer.wrap(testData));
+        channel.close();
     }
 }
