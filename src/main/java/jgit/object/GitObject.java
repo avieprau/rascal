@@ -2,8 +2,8 @@ package jgit.object;
 
 import jgit.storage.ReadableChannelFactory;
 
-import java.nio.channels.ReadableByteChannel;
 import java.io.IOException;
+import java.nio.channels.ReadableByteChannel;
 
 public class GitObject {
     private String name;

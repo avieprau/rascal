@@ -2,8 +2,8 @@ package jgit.storage.loose;
 
 import jgit.storage.WritableChannelFactory;
 
-import java.nio.channels.WritableByteChannel;
 import java.io.IOException;
+import java.nio.channels.WritableByteChannel;
 
 class LooseStorageNodeWritableChannelFactory implements WritableChannelFactory {
     private LooseStorageLayout storageLayout;

@@ -1,9 +1,9 @@
 package jgit.storage.loose;
 
+import jgit.object.name.ObjectNameResolver;
 import jgit.storage.AbstractStorage;
 import jgit.storage.ReadableChannelFactory;
 import jgit.storage.WritableChannelFactory;
-import jgit.object.name.ObjectNameResolver;
 
 public class LooseStorage extends AbstractStorage {
     private LooseStorageLayout storageLayout;

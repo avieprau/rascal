@@ -11,12 +11,10 @@ public class FileChannelBlobSource extends BlobSource {
         this.source = source;
     }
 
-    @Override
     protected long getBlobSize() throws IOException {
         return source.size();
     }
 
-    @Override
     protected void copyBlobDataTo(WritableByteChannel destination) throws IOException {
         source.transferTo(0, source.size(), destination);
     }

@@ -1,9 +1,9 @@
 package jgit.storage.packed;
 
+import jgit.object.name.ObjectNameResolver;
 import jgit.storage.AbstractStorage;
 import jgit.storage.ReadableChannelFactory;
 import jgit.storage.WritableChannelFactory;
-import jgit.object.name.ObjectNameResolver;
 
 
 public class PackedStorage extends AbstractStorage {
