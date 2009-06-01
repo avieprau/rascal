@@ -14,8 +14,8 @@ public class LooseStorage extends AbstractStorage {
     }
 
     protected ReadableChannelFactory getReadableChannelFactory(String objectName) {
-        // TODO: readable channel factory creation
-        return null;
+        // TODO: some cash for factories
+        return new LooseStorageNodeReadableChannelFactory(storageLayout, objectName);
     }
 
     protected WritableChannelFactory getWritableChannelFactory(String objectName) {

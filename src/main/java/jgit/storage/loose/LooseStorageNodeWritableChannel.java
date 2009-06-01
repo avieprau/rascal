@@ -10,8 +10,6 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
 
 class LooseStorageNodeWritableChannel implements WritableByteChannel {
-    private static final int OBJECT_DIR_NAME_LENGTH = 2;
-
     private static final String TEMP_FILE_NAME_PREFIX = "temp_obj_";
 
     private static final int TEMP_FILE_NAME_SUFFEX_LENGTH = 6;
@@ -27,7 +25,7 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
     private File realObjectFile;
 
     private void initObjectFile() throws IOException {
-        File objectDir = new File(storageLayout.getObjectsDir(), objectName.substring(0, OBJECT_DIR_NAME_LENGTH));
+        File objectDir = storageLayout.getObjectDirForName(objectName);
         if (!objectDir.isDirectory()) {
             if (objectDir.exists() || !objectDir.mkdir()) {
                 throw new IOException("Can't create object directory");
@@ -38,7 +36,7 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
         if (!tempObjectFile.createNewFile()) {
             throw new IOException("Can't create temp file for object");
         }
-        realObjectFile = new File(objectDir, objectName.substring(OBJECT_DIR_NAME_LENGTH));
+        realObjectFile = storageLayout.getObjectFileForName(objectName);
         tempObjectFileChannel = new FileOutputStream(tempObjectFile).getChannel();
     }
 

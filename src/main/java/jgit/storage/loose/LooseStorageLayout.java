@@ -6,4 +6,8 @@ import java.io.File;
 
 public interface LooseStorageLayout extends FileSystemStorageLayout {
     File getObjectsDir();
+
+    File getObjectDirForName(String objectName);
+
+    File getObjectFileForName(String objectName);
 }
