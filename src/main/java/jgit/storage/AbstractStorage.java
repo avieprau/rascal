@@ -1,16 +1,23 @@
 package jgit.storage;
 
+import jgit.object.AbstractObjectFactory;
+import jgit.object.CorruptedObjectException;
 import jgit.object.GitObject;
 import jgit.object.ObjectFactory;
 import jgit.object.name.ObjectNameResolver;
 import jgit.object.source.ObjectSource;
 
 import java.io.IOException;
+import java.nio.channels.ReadableByteChannel;
 
 public abstract class AbstractStorage implements Storage {
     private ObjectNameResolver objectNameResolver;
 
-    private ObjectFactory objectFactory;
+    private ObjectFactory objectFactory = new AbstractObjectFactory() {
+        protected ReadableByteChannel getChannel(String objectName) throws IOException {
+            return getReadableChannelFactory(objectName).createChannel();
+        }
+    };
 
     protected AbstractStorage(ObjectNameResolver objectNameResolver, ObjectFactory objectFactory) {
         this.objectNameResolver = objectNameResolver;
@@ -21,13 +28,13 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract WritableChannelFactory getWritableChannelFactory(String objectName);
 
-    public GitObject getObject(String name) throws IOException {
-        return objectFactory.createObject(name, getReadableChannelFactory(name));
+
+    public GitObject getObject(String name) throws IOException, CorruptedObjectException {
+        return objectFactory.createObject(name);
     }
 
-    public GitObject addObject(ObjectSource source) throws IOException {
+    public void addObject(ObjectSource source) throws IOException {
         String objectName = objectNameResolver.getObjectName(source);
         source.copyTo(getWritableChannelFactory(objectName).createChannel());
-        return objectFactory.createObject(objectName, getReadableChannelFactory(objectName));
     }
 }

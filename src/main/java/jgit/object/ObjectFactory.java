@@ -1,7 +1,7 @@
 package jgit.object;
 
-import jgit.storage.ReadableChannelFactory;
+import java.io.IOException;
 
 public interface ObjectFactory {
-    GitObject createObject(String name, ReadableChannelFactory channelFactory);
+    GitObject createObject(String name) throws IOException, CorruptedObjectException;
 }

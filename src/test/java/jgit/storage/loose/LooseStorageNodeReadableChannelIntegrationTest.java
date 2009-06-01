@@ -1,13 +1,13 @@
 package jgit.storage.loose;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
-import org.apache.commons.lang.ArrayUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public class LooseStorageNodeReadableChannelIntegrationTest extends AbstractLooseStorageNodeChannelIntegrationTest {

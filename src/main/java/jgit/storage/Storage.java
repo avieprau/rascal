@@ -1,12 +1,13 @@
 package jgit.storage;
 
+import jgit.object.CorruptedObjectException;
 import jgit.object.GitObject;
 import jgit.object.source.ObjectSource;
 
 import java.io.IOException;
 
 public interface Storage {
-    GitObject getObject(String name) throws IOException;
+    GitObject getObject(String name) throws IOException, CorruptedObjectException;
 
-    GitObject addObject(ObjectSource source) throws IOException;
+    void addObject(ObjectSource source) throws IOException;
 }

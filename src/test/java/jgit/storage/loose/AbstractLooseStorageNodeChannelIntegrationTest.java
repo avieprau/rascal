@@ -1,15 +1,14 @@
 package jgit.storage.loose;
 
 import jgit.AbstractIntegrationTest;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.math.RandomUtils;
+import org.junit.After;
+import org.junit.Before;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.junit.Before;
-import org.junit.After;
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.math.RandomUtils;
-import org.apache.commons.io.FileUtils;
 
 public abstract class AbstractLooseStorageNodeChannelIntegrationTest extends AbstractIntegrationTest {
     private static final String TEMP_DIR_NAME_PREFIX = "jgit_test_";
