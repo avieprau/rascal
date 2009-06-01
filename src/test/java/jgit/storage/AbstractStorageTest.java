@@ -38,7 +38,7 @@ public abstract class AbstractStorageTest extends AbstractTest {
     public void testGetObject() throws Exception {
         context.checking(new Expectations() {
             {
-                oneOf(objectFactoryMock).createObject(OBJECT_NAME, readableChannelFactoryMock);
+                oneOf(objectFactoryMock).createObject(OBJECT_NAME);
             }
         });
         getStorage().getObject(OBJECT_NAME);
@@ -57,7 +57,7 @@ public abstract class AbstractStorageTest extends AbstractTest {
 
                 oneOf(sourceMock).copyTo(storageChannelMock);
 
-                oneOf(objectFactoryMock).createObject(OBJECT_NAME, readableChannelFactoryMock);
+                oneOf(objectFactoryMock).createObject(OBJECT_NAME);
             }
         });
         getStorage().addObject(sourceMock);

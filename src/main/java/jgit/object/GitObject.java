@@ -28,5 +28,5 @@ public abstract class GitObject {
         return size;
     }
 
-    public abstract ReadableByteChannel getChannel() throws IOException;
+    public abstract ReadableByteChannel getContentChannel() throws IOException;
 }

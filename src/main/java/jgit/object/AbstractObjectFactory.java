@@ -39,13 +39,13 @@ public abstract class AbstractObjectFactory implements ObjectFactory {
         if ((headerSpaceIndex = ArrayUtils.indexOf(buffer, (byte) ' ')) == ArrayUtils.INDEX_NOT_FOUND
                 || (headerEndIndex = ArrayUtils.indexOf(buffer, (byte) 0)) == ArrayUtils.INDEX_NOT_FOUND
                 || headerSpaceIndex >= headerEndIndex) {
-            throw new CorruptedObjectException(name, "corrupted object header");
+            throw new CorruptedObjectException(name, "Corrupted object header");
         }
         try {
             GitObjectType type = parseObjectType(ArrayUtils.subarray(buffer, 0, headerSpaceIndex));
             long size = parseObjectSize(ArrayUtils.subarray(buffer, headerSpaceIndex + 1, headerEndIndex));
             return new GitObject(name, type, size) {
-                public ReadableByteChannel getChannel() throws IOException {
+                public ReadableByteChannel getContentChannel() throws IOException {
                     return AbstractObjectFactory.this.getChannel(name);
                 }
             };
