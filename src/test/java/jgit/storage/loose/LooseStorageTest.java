@@ -16,7 +16,7 @@ public class LooseStorageTest extends AbstractStorageTest {
     @Before
     public void setUpStorage() {
         LooseStorageLayout storageLayout = context.mock(LooseStorageLayout.class);
-        looseStorage = new LooseStorage(storageLayout, objectNameResolverMock) {
+        looseStorage = new LooseStorage(storageLayout, objectNameResolverMock, objectFactoryMock) {
             @Override
             protected ReadableChannelFactory getReadableChannelFactory(String objectName) {
                 return readableChannelFactoryMock;

@@ -1,11 +1,10 @@
 package jgit.storage;
 
 import jgit.AbstractTest;
-import jgit.object.GitObject;
+import jgit.object.ObjectFactory;
 import jgit.object.name.ObjectNameResolver;
 import jgit.object.source.ObjectSource;
 import org.jmock.Expectations;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,6 +19,8 @@ public abstract class AbstractStorageTest extends AbstractTest {
 
     protected WritableChannelFactory writableChannelFactoryMock;
 
+    protected ObjectFactory objectFactoryMock;
+
     private static final String OBJECT_NAME = "1f25";
 
     protected abstract AbstractStorage getStorage();
@@ -30,6 +31,17 @@ public abstract class AbstractStorageTest extends AbstractTest {
         sourceMock = context.mock(ObjectSource.class);
         readableChannelFactoryMock = context.mock(ReadableChannelFactory.class);
         writableChannelFactoryMock = context.mock(WritableChannelFactory.class);
+        objectFactoryMock = context.mock(ObjectFactory.class);
+    }
+
+    @Test
+    public void testGetObject() throws Exception {
+        context.checking(new Expectations() {
+            {
+                oneOf(objectFactoryMock).createObject(OBJECT_NAME, readableChannelFactoryMock);
+            }
+        });
+        getStorage().getObject(OBJECT_NAME);
     }
 
     @Test
@@ -44,9 +56,10 @@ public abstract class AbstractStorageTest extends AbstractTest {
                 will(returnValue(storageChannelMock));
 
                 oneOf(sourceMock).copyTo(storageChannelMock);
+
+                oneOf(objectFactoryMock).createObject(OBJECT_NAME, readableChannelFactoryMock);
             }
         });
-        GitObject resultObject = getStorage().addObject(sourceMock);
-        Assert.assertEquals(OBJECT_NAME, resultObject.getName());
+        getStorage().addObject(sourceMock);
     }
 }

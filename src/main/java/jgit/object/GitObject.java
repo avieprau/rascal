@@ -8,13 +8,10 @@ import java.nio.channels.ReadableByteChannel;
 public class GitObject {
     private String name;
 
-    private GitObjectType type;
-
     private ReadableChannelFactory channelFactory;
 
-    public GitObject(String name, GitObjectType type, ReadableChannelFactory channelFactory) {
+    GitObject(String name, ReadableChannelFactory channelFactory) {
         this.name = name;
-        this.type = type;
         this.channelFactory = channelFactory;
     }
 
@@ -23,7 +20,8 @@ public class GitObject {
     }
 
     public GitObjectType getType() {
-        return type;
+        // TODO: read object type from object channel
+        return null;
     }
 
     public ReadableByteChannel createChannel() throws IOException {
