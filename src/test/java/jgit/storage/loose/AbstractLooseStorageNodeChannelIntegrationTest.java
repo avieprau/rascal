@@ -1,42 +1,26 @@
 package jgit.storage.loose;
 
-import jgit.AbstractIntegrationTest;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
-import org.junit.After;
 import org.junit.Before;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.util.zip.DeflaterOutputStream;
 
-public abstract class AbstractLooseStorageNodeChannelIntegrationTest extends AbstractIntegrationTest {
-    private static final String TEMP_DIR_NAME_PREFIX = "jgit_test_";
-
-    private static final int TEMP_DIR_SUFFIX_LENGTH = 6;
-
+public abstract class AbstractLooseStorageNodeChannelIntegrationTest
+        extends AbstractLooseStorageLayoutDependentIntegrationTest {
     private static final int TEST_DATA_LENGTH = 1024;
 
     private static final String OBJECT_NAME_CHARS = "0123456789abcdef";
 
     private static final int OBJECT_NAME_LENGTH = 40;
 
-    protected File tempDir;
-
     protected byte[] testData;
 
     protected byte[] deflatedTestData;
 
     protected String objectName;
-
-    protected class LooseStorageLayoutMock extends DefaultLooseStorageLayout {
-        @Override
-        public File getObjectsDir() {
-            return tempDir;
-        }
-    }
 
     @Before
     public void setUpObjectName() {
@@ -54,20 +38,5 @@ public abstract class AbstractLooseStorageNodeChannelIntegrationTest extends Abs
         out.write(testData);
         out.close();
         deflatedTestData = outBuffer.toByteArray();
-    }
-
-    @Before
-    public void setUpTempDirectory() throws IOException {
-        File tempDirRoot = new File(System.getProperty("java.io.tmpdir"));
-        tempDir = new File(tempDirRoot, TEMP_DIR_NAME_PREFIX
-                + RandomStringUtils.randomNumeric(TEMP_DIR_SUFFIX_LENGTH));
-        if (!tempDir.mkdir()) {
-            throw new IOException("Can't create temprorary directory for testing");
-        }
-    }
-
-    @After
-    public void tearDownTempDirectory() throws IOException {
-        FileUtils.deleteDirectory(tempDir);
     }
 }

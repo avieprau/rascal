@@ -13,7 +13,7 @@ import java.nio.ByteBuffer;
 public class LooseStorageNodeReadableChannelIntegrationTest extends AbstractLooseStorageNodeChannelIntegrationTest {
     @Before
     public void setUpObjectFile() throws IOException {
-        File objectDir = new File(tempDir, objectName.substring(0, 2));
+        File objectDir = new File(objectsDir, objectName.substring(0, 2));
         if (!objectDir.mkdir()) {
             throw new IOException("Can't create object dir");
         }
@@ -28,8 +28,7 @@ public class LooseStorageNodeReadableChannelIntegrationTest extends AbstractLoos
 
     @Test
     public void testRead() throws IOException {
-        LooseStorageNodeReadableChannel channel
-                = new LooseStorageNodeReadableChannel(new LooseStorageLayoutMock(), objectName);
+        LooseStorageNodeReadableChannel channel = new LooseStorageNodeReadableChannel(storageLayoutMock, objectName);
         Assert.assertTrue(channel.isOpen());
         byte[] buffer = new byte[testData.length];
         int res = channel.read(ByteBuffer.wrap(buffer));
