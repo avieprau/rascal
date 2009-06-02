@@ -6,8 +6,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
+import java.nio.channels.Channels;
+import java.util.zip.DeflaterOutputStream;
 
 class LooseStorageNodeWritableChannel implements WritableByteChannel {
     private static final String TEMP_FILE_NAME_PREFIX = "temp_obj_";
@@ -20,7 +21,7 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
 
     private File tempObjectFile;
 
-    private FileChannel tempObjectFileChannel;
+    private WritableByteChannel tempObjectFileChannel;
 
     private File realObjectFile;
 
@@ -37,7 +38,7 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
             throw new IOException("Can't create temp file for object");
         }
         realObjectFile = storageLayout.getObjectFileForName(objectName);
-        tempObjectFileChannel = new FileOutputStream(tempObjectFile).getChannel();
+        tempObjectFileChannel = Channels.newChannel(new DeflaterOutputStream(new FileOutputStream(tempObjectFile)));
     }
 
     LooseStorageNodeWritableChannel(LooseStorageLayout storageLayout, String objectName) throws IOException {

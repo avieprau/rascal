@@ -9,6 +9,8 @@ import org.junit.Before;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.util.zip.DeflaterOutputStream;
 
 public abstract class AbstractLooseStorageNodeChannelIntegrationTest extends AbstractIntegrationTest {
     private static final String TEMP_DIR_NAME_PREFIX = "jgit_test_";
@@ -24,6 +26,8 @@ public abstract class AbstractLooseStorageNodeChannelIntegrationTest extends Abs
     protected File tempDir;
 
     protected byte[] testData;
+
+    protected byte[] deflatedTestData;
 
     protected String objectName;
 
@@ -45,6 +49,11 @@ public abstract class AbstractLooseStorageNodeChannelIntegrationTest extends Abs
         for (int i = 0; i < testData.length; i++) {
             testData[i] = (byte) RandomUtils.nextInt(Byte.MAX_VALUE);
         }
+        ByteArrayOutputStream outBuffer = new ByteArrayOutputStream();
+        DeflaterOutputStream out = new DeflaterOutputStream(outBuffer);
+        out.write(testData);
+        out.close();
+        deflatedTestData = outBuffer.toByteArray();
     }
 
     @Before

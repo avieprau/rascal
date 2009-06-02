@@ -21,7 +21,9 @@ public class LooseStorageNodeReadableChannelIntegrationTest extends AbstractLoos
         if (!objectFile.createNewFile()) {
             throw new IOException("Can't create object file");
         }
-        new FileOutputStream(objectFile).getChannel().write(ByteBuffer.wrap(testData));
+        FileOutputStream out = new FileOutputStream(objectFile);
+        out.write(deflatedTestData);
+        out.close();
     }
 
     @Test

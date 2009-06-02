@@ -2,15 +2,18 @@ package jgit.storage.loose;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.File;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.Channels;
+import java.util.zip.InflaterInputStream;
 
 class LooseStorageNodeReadableChannel implements ReadableByteChannel {
-    private FileChannel objectFileChannel;
+    private ReadableByteChannel objectFileChannel;
 
     public LooseStorageNodeReadableChannel(LooseStorageLayout storageLayout, String objectName) throws IOException {
-        objectFileChannel = new FileInputStream(storageLayout.getObjectFileForName(objectName)).getChannel();
+        File objectFile = storageLayout.getObjectFileForName(objectName);
+        objectFileChannel = Channels.newChannel(new InflaterInputStream(new FileInputStream(objectFile)));
     }
 
     public int read(ByteBuffer dst) throws IOException {

@@ -21,7 +21,7 @@ public class LooseStorageNodeWritableChannelIntegrationTest extends AbstractLoos
         Assert.assertTrue("Object directory should exist", objectDir.isDirectory());
         File objectFile = new File(objectDir, objectName.substring(2)); // tail of object name is name for object file
         Assert.assertTrue("Object file should exist", objectFile.isFile());
-        Assert.assertTrue(ArrayUtils.isEquals(FileUtils.readFileToByteArray(objectFile), testData));
+        Assert.assertTrue(ArrayUtils.isEquals(FileUtils.readFileToByteArray(objectFile), deflatedTestData));
     }
 
     @Test
