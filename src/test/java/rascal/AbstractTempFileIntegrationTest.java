@@ -25,6 +25,7 @@ public abstract class AbstractTempFileIntegrationTest extends AbstractIntegratio
     private static final String TEMP_FILE_PREFIX = "rascal_test";
 
     private static final String TEMP_FILE_SUFFIX = ".tmp";
+
     protected File tempFile;
 
     @Before

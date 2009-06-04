@@ -16,9 +16,19 @@
 
 package rascal.object.name;
 
+import org.apache.commons.codec.binary.Hex;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class SHA1ObjectNameResolverIntegrationTest extends AbstractMessageDigestObjectNameResolverIntegrationTest {
-    @Override
     protected MessageDigestObjectNameResolver getObjectNameResolver() {
         return new SHA1ObjectNameResolver();
+    }
+
+    protected String getHash(byte[] buffer) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-1");
+        digest.update(buffer);
+        return String.valueOf(Hex.encodeHex(digest.digest()));
     }
 }

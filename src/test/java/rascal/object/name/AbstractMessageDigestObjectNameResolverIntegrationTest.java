@@ -19,34 +19,25 @@ package rascal.object.name;
 import rascal.AbstractTempFileWithRandomDataIntegrationTest;
 import rascal.object.GitObjectType;
 import rascal.object.source.FileChannelBlobSource;
-import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.apache.commons.lang.ArrayUtils;
 
 import java.io.FileInputStream;
 import java.nio.channels.FileChannel;
-import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public abstract class AbstractMessageDigestObjectNameResolverIntegrationTest
         extends AbstractTempFileWithRandomDataIntegrationTest {
     protected abstract MessageDigestObjectNameResolver getObjectNameResolver();
 
-    private MessageDigestObjectNameResolver objectNameResolver;
-
-    @Before
-    public void setUp() {
-        objectNameResolver = getObjectNameResolver();
-    }
+    protected abstract String getHash(byte[] buffer) throws NoSuchAlgorithmException;
 
     @Test
     public void testGetBlobName() throws Exception {
         FileChannel tempFileChannel = new FileInputStream(tempFile).getChannel();
-        String objectName = objectNameResolver.getObjectName(new FileChannelBlobSource(tempFileChannel));
-        MessageDigest digest = objectNameResolver.getMessageDigest();
-        digest.update(String.format("%s %d", GitObjectType.BLOB, testData.length).getBytes());
-        digest.update((byte) 0);
-        digest.update(testData);
-        Assert.assertEquals(String.valueOf(Hex.encodeHex(digest.digest())), objectName);
+        String objectName = getObjectNameResolver().getObjectName(new FileChannelBlobSource(tempFileChannel));
+        String header = String.format("%s %d", GitObjectType.BLOB, testData.length);
+        Assert.assertEquals(getHash(ArrayUtils.add(header.getBytes(), (byte) 0)), objectName);
     }
 }
