@@ -45,7 +45,7 @@ public abstract class AbstractObjectFactoryTest extends AbstractTest {
         readableByteChannelMock = context.mock(ReadableByteChannel.class);
     }
 
-    private void headerReadExpectation() throws Exception {
+    private void headerReadExpectation(final String objectType) throws Exception {
         context.checking(new Expectations() {
             {
                 oneOf(readableByteChannelMock).read(with(new TypeSafeMatcher<ByteBuffer>() {
@@ -61,7 +61,7 @@ public abstract class AbstractObjectFactoryTest extends AbstractTest {
                 will(new CustomAction("writes header to buffer") {
                     public Object invoke(Invocation invocation) throws Throwable {
                         ByteBuffer buffer = (ByteBuffer) invocation.getParameter(0);
-                        String headerString = String.format("%s %d", "blob", OBJECT_SIZE);
+                        String headerString = String.format("%s %d", objectType, OBJECT_SIZE);
                         buffer.put(headerString.getBytes());
                         buffer.put((byte) 0);
                         return HEADER_BUFFER_LENGTH;
@@ -72,15 +72,40 @@ public abstract class AbstractObjectFactoryTest extends AbstractTest {
     }
 
     @Test
-    public void testGetObject() throws Exception {
+    public void testGetObjectsWithDifferentTypes() throws Exception {
         context.checking(new Expectations() {
             {
-                headerReadExpectation();
+                headerReadExpectation("blob");
+                headerReadExpectation("commit");
+                headerReadExpectation("tag");
+                headerReadExpectation("tree");
+                headerReadExpectation("test");
             }
         });
         GitObject object = getObjectFactory().createObject(OBJECT_NAME);
-        Assert.assertEquals(OBJECT_NAME, object.getName());
         Assert.assertEquals(GitObjectType.BLOB, object.getType());
-        Assert.assertEquals(OBJECT_SIZE, object.getSize());
+        object = getObjectFactory().createObject(OBJECT_NAME);
+        Assert.assertEquals(GitObjectType.COMMIT, object.getType());
+        object = getObjectFactory().createObject(OBJECT_NAME);
+        Assert.assertEquals(GitObjectType.TAG, object.getType());
+        object = getObjectFactory().createObject(OBJECT_NAME);
+        Assert.assertEquals(GitObjectType.TREE, object.getType());
+    }
+
+    @Test
+    public void testGetObjectWithUnknownType() throws Exception {
+        context.checking(new Expectations() {
+            {
+                headerReadExpectation("test");
+            }
+        });
+        try {
+            getObjectFactory().createObject(OBJECT_NAME);
+            Assert.fail();
+        } catch (CorruptedObjectException e) {
+            if (!(e.getCause() instanceof UnknownObjectTypeException)) {
+                Assert.fail();
+            }
+        }
     }
 }
