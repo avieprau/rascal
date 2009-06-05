@@ -37,7 +37,8 @@ public abstract class AbstractMessageDigestObjectNameResolverIntegrationTest
     public void testGetBlobName() throws Exception {
         FileChannel tempFileChannel = new FileInputStream(tempFile).getChannel();
         String objectName = getObjectNameResolver().getObjectName(new FileChannelBlobSource(tempFileChannel));
-        String header = String.format("%s %d", GitObjectType.BLOB, testData.length);
-        Assert.assertEquals(getHash(ArrayUtils.add(header.getBytes(), (byte) 0)), objectName);
+        String headerString = String.format("%s %d", GitObjectType.BLOB, testData.length);
+        byte[] header = ArrayUtils.add(headerString.getBytes(), (byte) 0);
+        Assert.assertEquals(getHash(ArrayUtils.addAll(header, testData)), objectName);
     }
 }
