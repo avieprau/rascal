@@ -21,6 +21,8 @@ import org.apache.commons.lang.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import rascal.object.GitObject;
+import rascal.object.GitObjectType;
 import rascal.object.name.SHA1ObjectNameResolver;
 import rascal.object.source.FileChannelBlobSource;
 import rascal.object.source.ObjectSource;
@@ -77,5 +79,16 @@ public class LooseStorageIntegrationTest extends AbstractLooseStorageLayoutDepen
         byte[] dataOfAddedTestFile = FileUtils.readFileToByteArray(addedTestFile);
         Assert.assertTrue("Content of object data should be equel to deflated test data",
                 ArrayUtils.isEquals(deflatedTestData, dataOfAddedTestFile));
+    }
+
+    @Test
+    public void testGetObject() throws Exception {
+        File objectFile = new File(new File(objectsDir, OBJECT_NAME.substring(0, 2)), OBJECT_NAME.substring(2));
+        FileUtils.writeByteArrayToFile(objectFile, deflatedTestData);
+        GitObject object = storage.getObject(OBJECT_NAME);
+        Assert.assertEquals(OBJECT_NAME, object.getName());
+        Assert.assertEquals(GitObjectType.BLOB, object.getType());
+        Assert.assertEquals((long) testData.length, object.getSize());
+        // TODO: test object channel
     }
 }
