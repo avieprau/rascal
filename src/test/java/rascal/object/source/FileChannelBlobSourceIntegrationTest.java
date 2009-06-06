@@ -16,12 +16,12 @@
 
 package rascal.object.source;
 
-import rascal.AbstractTempFileWithRandomDataIntegrationTest;
-import rascal.object.GitObjectType;
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import rascal.AbstractTempFileWithRandomDataIntegrationTest;
+import rascal.object.GitObjectType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;

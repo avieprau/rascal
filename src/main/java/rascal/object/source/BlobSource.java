@@ -16,8 +16,8 @@
 
 package rascal.object.source;
 
-import rascal.object.GitObjectType;
 import org.apache.commons.lang.ArrayUtils;
+import rascal.object.GitObjectType;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

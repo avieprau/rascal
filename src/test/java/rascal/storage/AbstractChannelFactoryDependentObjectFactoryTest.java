@@ -16,12 +16,12 @@
 
 package rascal.storage;
 
-import rascal.object.AbstractObjectFactory;
-import rascal.object.AbstractObjectFactoryTest;
 import org.jmock.Expectations;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import rascal.object.AbstractObjectFactory;
+import rascal.object.AbstractObjectFactoryTest;
 
 public abstract class AbstractChannelFactoryDependentObjectFactoryTest extends AbstractObjectFactoryTest {
     protected ReadableChannelFactory readableChannelFactoryMock;

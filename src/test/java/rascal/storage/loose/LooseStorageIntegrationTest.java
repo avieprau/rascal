@@ -16,14 +16,14 @@
 
 package rascal.storage.loose;
 
-import rascal.object.name.SHA1ObjectNameResolver;
-import rascal.object.source.FileChannelBlobSource;
-import rascal.object.source.ObjectSource;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import rascal.object.name.SHA1ObjectNameResolver;
+import rascal.object.source.FileChannelBlobSource;
+import rascal.object.source.ObjectSource;
 
 import java.io.*;
 

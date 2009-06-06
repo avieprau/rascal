@@ -16,13 +16,13 @@
 
 package rascal.storage;
 
+import org.jmock.Expectations;
+import org.junit.Before;
+import org.junit.Test;
 import rascal.AbstractTest;
 import rascal.object.ObjectFactory;
 import rascal.object.name.ObjectNameResolver;
 import rascal.object.source.ObjectSource;
-import org.jmock.Expectations;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.nio.channels.WritableByteChannel;
 

@@ -16,8 +16,8 @@
 
 package rascal.object.name;
 
-import rascal.object.source.ObjectSource;
 import org.apache.commons.codec.binary.Hex;
+import rascal.object.source.ObjectSource;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

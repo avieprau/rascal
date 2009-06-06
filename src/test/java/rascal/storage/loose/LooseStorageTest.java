@@ -16,11 +16,11 @@
 
 package rascal.storage.loose;
 
+import org.junit.Before;
 import rascal.object.ObjectFactory;
 import rascal.storage.AbstractStorage;
 import rascal.storage.AbstractStorageTest;
 import rascal.storage.WritableChannelFactory;
-import org.junit.Before;
 
 public class LooseStorageTest extends AbstractStorageTest {
     private LooseStorage looseStorage;

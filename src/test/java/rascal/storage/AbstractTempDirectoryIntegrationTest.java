@@ -16,16 +16,16 @@
 
 package rascal.storage;
 
-import rascal.AbstractIntegrationTest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
+import rascal.AbstractIntegrationTest;
 
 import java.io.File;
 import java.io.IOException;
 
-public class AbstractTempDirectoryIntegrationTest extends AbstractIntegrationTest {
+public abstract class AbstractTempDirectoryIntegrationTest extends AbstractIntegrationTest {
     private static final String TEMP_DIR_NAME_PREFIX = "rascal_test_";
 
     private static final int TEMP_DIR_SUFFIX_LENGTH = 6;

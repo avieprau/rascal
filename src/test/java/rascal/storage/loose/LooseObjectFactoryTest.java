@@ -16,10 +16,10 @@
 
 package rascal.storage.loose;
 
+import org.junit.Before;
 import rascal.storage.AbstractChannelFactoryDependentObjectFactoryTest;
 import rascal.storage.ChannelFactoryDependentObjectFactory;
 import rascal.storage.ReadableChannelFactory;
-import org.junit.Before;
 
 public class LooseObjectFactoryTest extends AbstractChannelFactoryDependentObjectFactoryTest {
     private LooseObjectFactory objectFactory;

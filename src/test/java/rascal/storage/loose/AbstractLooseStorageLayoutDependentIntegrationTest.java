@@ -16,13 +16,13 @@
 
 package rascal.storage.loose;
 
-import rascal.storage.AbstractTempDirectoryIntegrationTest;
 import org.junit.Before;
+import rascal.storage.AbstractTempDirectoryIntegrationTest;
 
 import java.io.File;
 import java.io.IOException;
 
-public class AbstractLooseStorageLayoutDependentIntegrationTest extends AbstractTempDirectoryIntegrationTest {
+public abstract class AbstractLooseStorageLayoutDependentIntegrationTest extends AbstractTempDirectoryIntegrationTest {
     private static final String OBJECTS_DIR_NAME = "objects";
 
     protected LooseStorageLayout storageLayoutMock;

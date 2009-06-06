@@ -1,7 +1,7 @@
 package rascal;
 
-import org.springframework.test.AssertThrows;
 import junit.framework.AssertionFailedError;
+import org.springframework.test.AssertThrows;
 
 public abstract class AssertThrowsWithCause extends AssertThrows {
     private Class<? extends Exception> expectedCauseException;

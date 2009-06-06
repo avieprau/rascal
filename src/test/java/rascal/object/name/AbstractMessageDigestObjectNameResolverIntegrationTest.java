@@ -16,12 +16,12 @@
 
 package rascal.object.name;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.junit.Assert;
+import org.junit.Test;
 import rascal.AbstractTempFileWithRandomDataIntegrationTest;
 import rascal.object.GitObjectType;
 import rascal.object.source.FileChannelBlobSource;
-import org.junit.Assert;
-import org.junit.Test;
-import org.apache.commons.lang.ArrayUtils;
 
 import java.io.FileInputStream;
 import java.nio.channels.FileChannel;

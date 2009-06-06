@@ -16,8 +16,8 @@
 
 package rascal;
 
-import org.junit.Before;
 import org.apache.commons.io.FileUtils;
+import org.junit.Before;
 
 public abstract class AbstractTempFileWithRandomDataIntegrationTest extends AbstractTempFileIntegrationTest {
     protected byte[] testData;

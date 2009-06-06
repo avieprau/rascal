@@ -18,12 +18,11 @@ package rascal.storage.loose;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
+import rascal.RandomTestDataUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.DeflaterOutputStream;
-
-import rascal.RandomTestDataUtils;
 
 public abstract class AbstractLooseStorageNodeChannelIntegrationTest
         extends AbstractLooseStorageLayoutDependentIntegrationTest {

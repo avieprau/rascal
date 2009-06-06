@@ -16,8 +16,6 @@
 
 package rascal.object;
 
-import rascal.AbstractTest;
-import rascal.AssertThrowsWithCause;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.jmock.Expectations;
@@ -27,6 +25,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.AssertThrows;
+import rascal.AbstractTest;
+import rascal.AssertThrowsWithCause;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
