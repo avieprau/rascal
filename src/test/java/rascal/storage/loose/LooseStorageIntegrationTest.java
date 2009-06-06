@@ -25,7 +25,10 @@ import rascal.object.name.SHA1ObjectNameResolver;
 import rascal.object.source.FileChannelBlobSource;
 import rascal.object.source.ObjectSource;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class LooseStorageIntegrationTest extends AbstractLooseStorageLayoutDependentIntegrationTest {
     private static final String OBJECT_NAME = "243be0d945ba35001a4cfb3ebc4560b22c0e9e2b";
@@ -64,15 +67,15 @@ public class LooseStorageIntegrationTest extends AbstractLooseStorageLayoutDepen
     @Test
     public void testAddObject() throws Exception {
         File testFile = new File(tempDir, "test");
-        FileOutputStream out = new FileOutputStream(testFile);
-        out.write(testData);
-        out.close();
+        FileUtils.writeByteArrayToFile(testFile, testData);
         ObjectSource source = new FileChannelBlobSource(new FileInputStream(testFile).getChannel());
         storage.addObject(source);
         File objectDir = new File(objectsDir, OBJECT_NAME.substring(0, 2));
-        Assert.assertTrue(objectDir.isDirectory());
+        Assert.assertTrue("Object directory should exist", objectDir.isDirectory());
         File addedTestFile = new File(objectDir, OBJECT_NAME.substring(2));
-        Assert.assertTrue(addedTestFile.isFile());
-        Assert.assertTrue(ArrayUtils.isEquals(deflatedTestData, FileUtils.readFileToByteArray(addedTestFile)));
+        Assert.assertTrue("Object file should exist", addedTestFile.isFile());
+        byte[] dataOfAddedTestFile = FileUtils.readFileToByteArray(addedTestFile);
+        Assert.assertTrue("Content of object data should be equel to deflated test data",
+                ArrayUtils.isEquals(deflatedTestData, dataOfAddedTestFile));
     }
 }

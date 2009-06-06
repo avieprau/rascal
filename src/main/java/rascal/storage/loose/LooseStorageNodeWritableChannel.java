@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
+import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 class LooseStorageNodeWritableChannel implements WritableByteChannel {
@@ -41,6 +42,12 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
 
     private File realObjectFile;
 
+    private void initTempObjectFileChannel() throws IOException {
+        Deflater deflater = new Deflater(storageLayout.getLooseCompressionLevel());
+        DeflaterOutputStream output = new DeflaterOutputStream(new FileOutputStream(tempObjectFile), deflater);
+        tempObjectFileChannel = Channels.newChannel(output);
+    }
+
     private void initObjectFile() throws IOException {
         File objectDir = storageLayout.getObjectDirForName(objectName);
         if (!objectDir.isDirectory()) {
@@ -54,7 +61,7 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
             throw new IOException("Can't create temp file for object");
         }
         realObjectFile = storageLayout.getObjectFileForName(objectName);
-        tempObjectFileChannel = Channels.newChannel(new DeflaterOutputStream(new FileOutputStream(tempObjectFile)));
+        initTempObjectFileChannel();
     }
 
     LooseStorageNodeWritableChannel(LooseStorageLayout storageLayout, String objectName) throws IOException {
