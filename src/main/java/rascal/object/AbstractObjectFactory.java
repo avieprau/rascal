@@ -23,7 +23,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
 public abstract class AbstractObjectFactory implements ObjectFactory {
-    private static final int OBJECT_HEADER_BUFFER_LENGTH = 16;
+    private static final int OBJECT_HEADER_BUFFER_LENGTH = 32;
 
     protected abstract ReadableByteChannel getChannel(String objectName) throws IOException;
 
@@ -46,7 +46,21 @@ public abstract class AbstractObjectFactory implements ObjectFactory {
         return Long.valueOf(sizeString);
     }
 
-    public GitObject createObject(final String name) throws IOException, CorruptedObjectException {
+    private GitObject createObject(final String name, byte[] buffer, int headerSpaceIndex, int headerEndIndex)
+            throws CorruptedObjectException, UnknownObjectTypeException, NumberFormatException {
+        GitObjectType type = parseObjectType(ArrayUtils.subarray(buffer, 0, headerSpaceIndex));
+        long size = parseObjectSize(ArrayUtils.subarray(buffer, headerSpaceIndex + 1, headerEndIndex));
+        if (size <= 0) {
+            throw new CorruptedObjectException(name, "Wrong object size");
+        }
+        return new GitObject(name, type, size) {
+            public ReadableByteChannel getContentChannel() throws IOException {
+                return AbstractObjectFactory.this.getChannel(name);
+            }
+        };
+    }
+
+    public GitObject createObject(String name) throws IOException, CorruptedObjectException {
         ReadableByteChannel channel = getChannel(name);
         byte[] buffer = new byte[OBJECT_HEADER_BUFFER_LENGTH];
         channel.read(ByteBuffer.wrap(buffer));
@@ -58,13 +72,7 @@ public abstract class AbstractObjectFactory implements ObjectFactory {
             throw new CorruptedObjectException(name, "Corrupted object header");
         }
         try {
-            GitObjectType type = parseObjectType(ArrayUtils.subarray(buffer, 0, headerSpaceIndex));
-            long size = parseObjectSize(ArrayUtils.subarray(buffer, headerSpaceIndex + 1, headerEndIndex));
-            return new GitObject(name, type, size) {
-                public ReadableByteChannel getContentChannel() throws IOException {
-                    return AbstractObjectFactory.this.getChannel(name);
-                }
-            };
+            return createObject(name, buffer, headerSpaceIndex, headerEndIndex);
         } catch (UnknownObjectTypeException e) {
             throw new CorruptedObjectException(name, e);
         } catch (NumberFormatException e) {

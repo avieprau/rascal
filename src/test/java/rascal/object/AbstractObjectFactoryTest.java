@@ -17,6 +17,7 @@
 package rascal.object;
 
 import rascal.AbstractTest;
+import rascal.AssertThrowsWithCause;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.jmock.Expectations;
@@ -25,16 +26,15 @@ import org.jmock.lib.action.CustomAction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.AssertThrows;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
 public abstract class AbstractObjectFactoryTest extends AbstractTest {
-    private static final int HEADER_BUFFER_LENGTH = 16;
+    private static final int HEADER_BUFFER_LENGTH = 32;
 
-    private static final long OBJECT_SIZE = 128;
-
-    protected static final String OBJECT_NAME = "ab45";
+    protected static final String OBJECT_NAME = "597ec6d4d549facf29766a9ec00b1acb84e2f16d";
 
     protected ReadableByteChannel readableByteChannelMock;
 
@@ -45,7 +45,7 @@ public abstract class AbstractObjectFactoryTest extends AbstractTest {
         readableByteChannelMock = context.mock(ReadableByteChannel.class);
     }
 
-    private void headerReadExpectation(final String objectType) throws Exception {
+    private void headerReadExpectation(final String header) throws Exception {
         context.checking(new Expectations() {
             {
                 oneOf(readableByteChannelMock).read(with(new TypeSafeMatcher<ByteBuffer>() {
@@ -61,8 +61,7 @@ public abstract class AbstractObjectFactoryTest extends AbstractTest {
                 will(new CustomAction("writes header to buffer") {
                     public Object invoke(Invocation invocation) throws Throwable {
                         ByteBuffer buffer = (ByteBuffer) invocation.getParameter(0);
-                        String headerString = String.format("%s %d", objectType, OBJECT_SIZE);
-                        buffer.put(headerString.getBytes());
+                        buffer.put(header.getBytes());
                         buffer.put((byte) 0);
                         return HEADER_BUFFER_LENGTH;
                     }
@@ -71,15 +70,19 @@ public abstract class AbstractObjectFactoryTest extends AbstractTest {
         });
     }
 
+    private void headerReadExpectation(final String objectType, final String sizeString) throws Exception {
+        headerReadExpectation(String.format("%s %s", objectType, sizeString));
+    }
+
     @Test
     public void testGetObjectsWithDifferentTypes() throws Exception {
         context.checking(new Expectations() {
             {
-                headerReadExpectation("blob");
-                headerReadExpectation("commit");
-                headerReadExpectation("tag");
-                headerReadExpectation("tree");
-                headerReadExpectation("test");
+                headerReadExpectation("blob", "1");
+                headerReadExpectation("commit", "1");
+                headerReadExpectation("tag", "1");
+                headerReadExpectation("tree", "1");
+                headerReadExpectation("test", "1");
             }
         });
         GitObject object = getObjectFactory().createObject(OBJECT_NAME);
@@ -96,16 +99,98 @@ public abstract class AbstractObjectFactoryTest extends AbstractTest {
     public void testGetObjectWithUnknownType() throws Exception {
         context.checking(new Expectations() {
             {
-                headerReadExpectation("test");
+                headerReadExpectation("test", "1");
             }
         });
-        try {
-            getObjectFactory().createObject(OBJECT_NAME);
-            Assert.fail();
-        } catch (CorruptedObjectException e) {
-            if (!(e.getCause() instanceof UnknownObjectTypeException)) {
-                Assert.fail();
+        new AssertThrowsWithCause(CorruptedObjectException.class, UnknownObjectTypeException.class) {
+            public void test() throws Exception {
+                getObjectFactory().createObject(OBJECT_NAME);
             }
-        }
+        }.runTest();
+    }
+
+    @Test
+    public void testGetObjectWithCorruptedHeader() throws Exception {
+        context.checking(new Expectations() {
+            {
+                headerReadExpectation("testtest");
+            }
+        });
+        new AssertThrows(CorruptedObjectException.class) {
+            public void test() throws Exception {
+                getObjectFactory().createObject(OBJECT_NAME);
+            }
+        }.runTest();
+    }
+
+    @Test
+    public void testGetObjectWithCorruptedSize() throws Exception {
+        context.checking(new Expectations() {
+            {
+                headerReadExpectation("blob", "b123");
+            }
+        });
+        new AssertThrowsWithCause(CorruptedObjectException.class, NumberFormatException.class) {
+            public void test() throws Exception {
+                getObjectFactory().createObject(OBJECT_NAME);
+            }
+        }.runTest();
+    }
+
+    @Test
+    public void testGetObjectWithDifferentSizes() throws Exception {
+        context.checking(new Expectations() {
+            {
+                headerReadExpectation("blob", "123");
+                headerReadExpectation("blob", "1");
+                headerReadExpectation("blob", "5673");
+                headerReadExpectation("blob", String.valueOf(Long.MAX_VALUE));
+            }
+        });
+        GitObject object = getObjectFactory().createObject(OBJECT_NAME);
+        Assert.assertEquals(123L, object.getSize());
+        object = getObjectFactory().createObject(OBJECT_NAME);
+        Assert.assertEquals(1L, object.getSize());
+        object = getObjectFactory().createObject(OBJECT_NAME);
+        Assert.assertEquals(5673L, object.getSize());
+        object = getObjectFactory().createObject(OBJECT_NAME);
+        Assert.assertEquals(Long.MAX_VALUE, object.getSize());
+    }
+
+
+    @Test
+    public void testGetObjectWithWrongSize() throws Exception {
+        context.checking(new Expectations() {
+            {
+                headerReadExpectation("blob", "0");
+                headerReadExpectation("blob", "-1");
+            }
+        });
+        new AssertThrows(CorruptedObjectException.class) {
+            public void test() throws Exception {
+                getObjectFactory().createObject(OBJECT_NAME);
+            }
+        }.runTest();
+        new AssertThrows(CorruptedObjectException.class) {
+            public void test() throws Exception {
+                getObjectFactory().createObject(OBJECT_NAME);
+            }
+        }.runTest();
+    }
+
+    @Test
+    public void testGetObjectWithDifferentNames() throws Exception {
+        String name1 = "7b6e815383f9581ea2936eaee785e79f43f73307";
+        String name2 = "cc1566b0552fdebdb768ba449a8d678f20be30d5";
+        context.checking(new Expectations() {
+            {
+                headerReadExpectation("blob", "1");
+                headerReadExpectation("blob", "1");
+            }
+        });
+        GitObject object = getObjectFactory().createObject(name1);
+        Assert.assertEquals(name1, object.getName());
+        object = getObjectFactory().createObject(name2);
+        Assert.assertEquals(name2, object.getName());
     }
 }
