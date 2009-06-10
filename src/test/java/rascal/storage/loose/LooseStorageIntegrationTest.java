@@ -24,11 +24,10 @@ import org.junit.Test;
 import rascal.object.GitObject;
 import rascal.object.GitObjectType;
 import rascal.object.name.SHA1ObjectNameResolver;
-import rascal.object.source.FileChannelBlobSource;
+import rascal.object.source.FileBlobSource;
 import rascal.object.source.ObjectSource;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -70,7 +69,7 @@ public class LooseStorageIntegrationTest extends AbstractLooseStorageLayoutDepen
     public void testAddObject() throws Exception {
         File testFile = new File(tempDir, "test");
         FileUtils.writeByteArrayToFile(testFile, testData);
-        ObjectSource source = new FileChannelBlobSource(new FileInputStream(testFile).getChannel());
+        ObjectSource source = new FileBlobSource(testFile);
         storage.addObject(source);
         File objectDir = new File(objectsDir, OBJECT_NAME.substring(0, 2));
         Assert.assertTrue("Object directory should exist", objectDir.isDirectory());

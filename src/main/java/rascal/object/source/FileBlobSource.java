@@ -16,22 +16,38 @@
 
 package rascal.object.source;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
 
-public class FileChannelBlobSource extends BlobSource {
-    private FileChannel source;
+public class FileBlobSource extends BlobSource {
+    private File source;
 
-    public FileChannelBlobSource(FileChannel source) {
+    public FileBlobSource(File source) {
         this.source = source;
     }
 
+    private FileChannel createChannel() throws IOException {
+        return new FileInputStream(source).getChannel();
+    }
+
     protected long getBlobSize() throws IOException {
-        return source.size();
+        FileChannel channel = createChannel();
+        try {
+            return channel.size();
+        } finally {
+            channel.close();
+        }
     }
 
     protected void copyBlobDataTo(WritableByteChannel destination) throws IOException {
-        source.transferTo(0, source.size(), destination);
+        FileChannel channel = createChannel();
+        try {
+            channel.transferTo(0, channel.size(), destination);
+        } finally {
+            channel.close();
+        }
     }
 }

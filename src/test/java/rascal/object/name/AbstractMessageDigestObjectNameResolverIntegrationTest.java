@@ -21,10 +21,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import rascal.AbstractTempFileWithRandomDataIntegrationTest;
 import rascal.object.GitObjectType;
-import rascal.object.source.FileChannelBlobSource;
+import rascal.object.source.FileBlobSource;
 
-import java.io.FileInputStream;
-import java.nio.channels.FileChannel;
 import java.security.NoSuchAlgorithmException;
 
 public abstract class AbstractMessageDigestObjectNameResolverIntegrationTest
@@ -35,8 +33,7 @@ public abstract class AbstractMessageDigestObjectNameResolverIntegrationTest
 
     @Test
     public void testGetBlobName() throws Exception {
-        FileChannel tempFileChannel = new FileInputStream(tempFile).getChannel();
-        String objectName = getObjectNameResolver().getObjectName(new FileChannelBlobSource(tempFileChannel));
+        String objectName = getObjectNameResolver().getObjectName(new FileBlobSource(tempFile));
         String headerString = String.format("%s %d", GitObjectType.BLOB, testData.length);
         byte[] header = ArrayUtils.add(headerString.getBytes(), (byte) 0);
         Assert.assertEquals(getHash(ArrayUtils.addAll(header, testData)), objectName);

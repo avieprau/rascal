@@ -24,22 +24,20 @@ import rascal.AbstractTempFileWithRandomDataIntegrationTest;
 import rascal.object.GitObjectType;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.nio.channels.Channels;
 
-public class FileChannelBlobSourceIntegrationTest extends AbstractTempFileWithRandomDataIntegrationTest {
-    private FileChannelBlobSource fileChannelBlobSource;
+public class FilelBlobSourceIntegrationTest extends AbstractTempFileWithRandomDataIntegrationTest {
+    private FileBlobSource fileBlobSource;
 
     @Before
     public void setUp() throws Exception {
-        FileInputStream inputStream = new FileInputStream(tempFile);
-        fileChannelBlobSource = new FileChannelBlobSource(inputStream.getChannel());
+        fileBlobSource = new FileBlobSource(tempFile);
     }
 
     @Test
     public void testCopyTo() throws Exception {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        fileChannelBlobSource.copyTo(Channels.newChannel(output));
+        fileBlobSource.copyTo(Channels.newChannel(output));
         byte[] buffer = output.toByteArray();
         String expectedHeaderString = String.format("%s %d", GitObjectType.BLOB, testData.length);
         byte[] expectedHeader = ArrayUtils.add(expectedHeaderString.getBytes(), (byte) 0);

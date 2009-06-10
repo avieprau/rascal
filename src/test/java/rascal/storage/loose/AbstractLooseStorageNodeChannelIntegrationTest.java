@@ -23,12 +23,15 @@ import rascal.RandomTestDataUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.DeflaterOutputStream;
+import java.util.zip.Deflater;
 
 public abstract class AbstractLooseStorageNodeChannelIntegrationTest
         extends AbstractLooseStorageLayoutDependentIntegrationTest {
     private static final String OBJECT_NAME_CHARS = "0123456789abcdef";
 
     private static final int OBJECT_NAME_LENGTH = 40;
+
+    private static final int DEFLATED_DATA_COMPRESS_LEVER = 1;
 
     protected byte[] testData;
 
@@ -45,7 +48,7 @@ public abstract class AbstractLooseStorageNodeChannelIntegrationTest
     public void setUpTestData() throws IOException {
         testData = RandomTestDataUtils.createRandomData();
         ByteArrayOutputStream outBuffer = new ByteArrayOutputStream();
-        DeflaterOutputStream out = new DeflaterOutputStream(outBuffer);
+        DeflaterOutputStream out = new DeflaterOutputStream(outBuffer, new Deflater(DEFLATED_DATA_COMPRESS_LEVER));
         out.write(testData);
         out.close();
         deflatedTestData = outBuffer.toByteArray();

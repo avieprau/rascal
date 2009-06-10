@@ -66,6 +66,8 @@ public abstract class AbstractObjectFactoryTest extends AbstractTest {
                         return HEADER_BUFFER_LENGTH;
                     }
                 });
+
+                oneOf(readableByteChannelMock).close();
             }
         });
     }

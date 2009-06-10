@@ -64,6 +64,7 @@ public abstract class AbstractObjectFactory implements ObjectFactory {
         ReadableByteChannel channel = getChannel(name);
         byte[] buffer = new byte[OBJECT_HEADER_BUFFER_LENGTH];
         channel.read(ByteBuffer.wrap(buffer));
+        channel.close();
         int headerSpaceIndex;
         int headerEndIndex;
         if ((headerSpaceIndex = ArrayUtils.indexOf(buffer, (byte) ' ')) == ArrayUtils.INDEX_NOT_FOUND
