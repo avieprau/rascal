@@ -32,7 +32,8 @@ public class LooseStorageTest extends AbstractStorageTest {
     @Before
     public void setUpStorage() {
         LooseStorageLayout storageLayout = context.mock(LooseStorageLayout.class);
-        looseStorage = new LooseStorage(storageLayout, objectNameResolverMock) {
+        LooseStorageConfiguration storageConfiguration = context.mock(LooseStorageConfiguration.class);
+        looseStorage = new LooseStorage(storageLayout, storageConfiguration, objectNameResolverMock) {
             @Override
             protected ObjectFactory getObjectFactory() {
                 return objectFactoryMock;

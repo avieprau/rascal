@@ -31,7 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class LooseStorageIntegrationTest extends AbstractLooseStorageLayoutDependentIntegrationTest {
+public class LooseStorageIntegrationTest extends AbstractLooseStorageConfigurationDependentIntegrationTest {
     private static final String OBJECT_NAME = "243be0d945ba35001a4cfb3ebc4560b22c0e9e2b";
 
     private static final String TEST_DATA_FILE_NAME_SUFFIX = ".data";
@@ -46,7 +46,7 @@ public class LooseStorageIntegrationTest extends AbstractLooseStorageLayoutDepen
 
     @Before
     public void setUp() throws Exception {
-        storage = new LooseStorage(storageLayoutMock, new SHA1ObjectNameResolver());
+        storage = new LooseStorage(storageLayoutMock, storageConfiguration, new SHA1ObjectNameResolver());
     }
 
     private byte[] loadTestDataWithNameSuffix(String nameSuffix) throws IOException {

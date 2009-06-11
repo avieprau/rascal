@@ -36,8 +36,4 @@ public class DefaultLooseStorageLayout extends DefaultFileSystemStorageLayout im
     public File getObjectFileForName(String objectName) {
         return new File(getObjectDirForName(objectName), objectName.substring(OBJECT_DIR_NAME_LENGTH));
     }
-
-    public int getLooseCompressionLevel() {
-        return 1;
-    }
 }

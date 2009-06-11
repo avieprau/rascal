@@ -24,11 +24,15 @@ import rascal.storage.WritableChannelFactory;
 public class LooseStorage extends AbstractStorage {
     private LooseStorageLayout storageLayout;
 
+    private LooseStorageConfiguration storageConfiguration;
+
     private ObjectFactory objectFactory;
 
-    public LooseStorage(LooseStorageLayout storageLayout, ObjectNameResolver objectNameResolver) {
+    public LooseStorage(LooseStorageLayout storageLayout, LooseStorageConfiguration storageConfiguration,
+                        ObjectNameResolver objectNameResolver) {
         super(objectNameResolver);
         this.storageLayout = storageLayout;
+        this.storageConfiguration = storageConfiguration;
         objectFactory = new LooseObjectFactory(storageLayout);
     }
 
@@ -37,6 +41,6 @@ public class LooseStorage extends AbstractStorage {
     }
 
     protected WritableChannelFactory getWritableChannelFactory(String objectName) {
-        return new LooseStorageNodeWritableChannelFactory(storageLayout, objectName);
+        return new LooseStorageNodeWritableChannelFactory(storageLayout, storageConfiguration, objectName);
     }
 }

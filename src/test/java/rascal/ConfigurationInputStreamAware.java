@@ -14,20 +14,10 @@
  * limitations under the License.
  */
 
-package rascal.storage;
+package rascal;
 
-import java.io.File;
+import java.io.InputStream;
 
-public class DefaultFileSystemStorageLayout implements FileSystemStorageLayout {
-    private static final String REPOSITORY_DIR_NAME = ".git";
-
-    private static final String CONFIGURATION_FILE_NAME = "config";
-
-    public File getRepositoryDir() {
-        return new File(REPOSITORY_DIR_NAME);
-    }
-
-    public File getConfigurationFile() {
-        return new File(getRepositoryDir(), CONFIGURATION_FILE_NAME);
-    }
+public interface ConfigurationInputStreamAware {
+    void setConfigurationInputStream(InputStream stream);
 }

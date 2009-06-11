@@ -84,7 +84,6 @@ public abstract class AbstractObjectFactoryTest extends AbstractTest {
                 headerReadExpectation("commit", "1");
                 headerReadExpectation("tag", "1");
                 headerReadExpectation("tree", "1");
-                headerReadExpectation("test", "1");
             }
         });
         GitObject object = getObjectFactory().createObject(OBJECT_NAME);

@@ -17,4 +17,9 @@
 package rascal.config;
 
 public interface ConfigurationSource {
+    String getString(String key) throws ConfigurationPropertyNotFoundException;
+
+    int getInteger(String key) throws ConfigurationPropertyNotFoundException;
+
+    boolean getBoolean(String key) throws ConfigurationPropertyNotFoundException;
 }

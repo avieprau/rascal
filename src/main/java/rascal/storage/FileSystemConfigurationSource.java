@@ -16,7 +16,25 @@
 
 package rascal.storage;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.HierarchicalINIConfiguration;
+import rascal.config.ApacheCommonsConfigurationSource;
 import rascal.config.ConfigurationSource;
 
-public class FileSystemConfigurationSource implements ConfigurationSource {
+public class FileSystemConfigurationSource extends ApacheCommonsConfigurationSource implements ConfigurationSource {
+    private Configuration commonsConfiguration;
+
+    public FileSystemConfigurationSource(FileSystemStorageLayout storageLayout) {
+        try {
+            commonsConfiguration = new HierarchicalINIConfiguration(storageLayout.getConfigurationFile());
+        } catch (ConfigurationException e) {
+            // TODO: some special excaptions for this case
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected Configuration getCommonsConfiguration() {
+        return commonsConfiguration;
+    }
 }

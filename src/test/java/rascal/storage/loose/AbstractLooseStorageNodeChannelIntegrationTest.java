@@ -22,11 +22,11 @@ import rascal.RandomTestDataUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.zip.DeflaterOutputStream;
 import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
 
 public abstract class AbstractLooseStorageNodeChannelIntegrationTest
-        extends AbstractLooseStorageLayoutDependentIntegrationTest {
+        extends AbstractLooseStorageConfigurationDependentIntegrationTest {
     private static final String OBJECT_NAME_CHARS = "0123456789abcdef";
 
     private static final int OBJECT_NAME_LENGTH = 40;

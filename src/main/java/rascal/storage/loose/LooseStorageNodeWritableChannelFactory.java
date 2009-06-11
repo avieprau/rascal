@@ -24,14 +24,18 @@ import java.nio.channels.WritableByteChannel;
 class LooseStorageNodeWritableChannelFactory implements WritableChannelFactory {
     private LooseStorageLayout storageLayout;
 
+    private LooseStorageConfiguration storageConfiguration;
+
     private String objectName;
 
-    LooseStorageNodeWritableChannelFactory(LooseStorageLayout storageLayout, String objectName) {
+    LooseStorageNodeWritableChannelFactory(LooseStorageLayout storageLayout,
+                                           LooseStorageConfiguration storageConfiguration, String objectName) {
         this.storageLayout = storageLayout;
+        this.storageConfiguration = storageConfiguration;
         this.objectName = objectName;
     }
 
     public WritableByteChannel createChannel() throws IOException {
-        return new LooseStorageNodeWritableChannel(storageLayout, objectName);
+        return new LooseStorageNodeWritableChannel(storageLayout, storageConfiguration, objectName);
     }
 }

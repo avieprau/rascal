@@ -73,8 +73,6 @@ public abstract class AbstractStorageTest extends AbstractTest {
 
                 oneOf(sourceMock).copyTo(storageChannelMock);
 
-                oneOf(objectFactoryMock).createObject(OBJECT_NAME);
-
                 oneOf(storageChannelMock).close();
             }
         });

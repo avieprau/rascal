@@ -16,18 +16,19 @@
 
 package rascal.storage;
 
-import java.io.File;
+import org.junit.Before;
+import rascal.config.AbstractConfiguration;
+import rascal.config.AbstractConfigurationTest;
 
-public class DefaultFileSystemStorageLayout implements FileSystemStorageLayout {
-    private static final String REPOSITORY_DIR_NAME = ".git";
+public class DefaultStorageConfigurationTest extends AbstractConfigurationTest {
+    protected DefaultStorageConfiguration defaultStorageConfiguration;
 
-    private static final String CONFIGURATION_FILE_NAME = "config";
-
-    public File getRepositoryDir() {
-        return new File(REPOSITORY_DIR_NAME);
+    protected AbstractConfiguration getConfiguration() {
+        return defaultStorageConfiguration;
     }
 
-    public File getConfigurationFile() {
-        return new File(getRepositoryDir(), CONFIGURATION_FILE_NAME);
+    @Before
+    public void setUp() {
+        defaultStorageConfiguration = new DefaultStorageConfiguration(configurationSourceMock);
     }
 }

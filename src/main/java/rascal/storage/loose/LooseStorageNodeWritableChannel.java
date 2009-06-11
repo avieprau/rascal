@@ -34,6 +34,8 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
 
     private LooseStorageLayout storageLayout;
 
+    private LooseStorageConfiguration storageConfiguration;
+
     private String objectName;
 
     private File tempObjectFile;
@@ -43,7 +45,7 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
     private File realObjectFile;
 
     private void initTempObjectFileChannel() throws IOException {
-        Deflater deflater = new Deflater(storageLayout.getLooseCompressionLevel());
+        Deflater deflater = new Deflater(storageConfiguration.getLooseCompressionLevel());
         DeflaterOutputStream output = new DeflaterOutputStream(new FileOutputStream(tempObjectFile), deflater);
         tempObjectFileChannel = Channels.newChannel(output);
     }
@@ -64,8 +66,10 @@ class LooseStorageNodeWritableChannel implements WritableByteChannel {
         initTempObjectFileChannel();
     }
 
-    LooseStorageNodeWritableChannel(LooseStorageLayout storageLayout, String objectName) throws IOException {
+    LooseStorageNodeWritableChannel(LooseStorageLayout storageLayout, LooseStorageConfiguration storageConfiguration,
+                                    String objectName) throws IOException {
         this.storageLayout = storageLayout;
+        this.storageConfiguration = storageConfiguration;
         this.objectName = objectName;
         initObjectFile();
     }

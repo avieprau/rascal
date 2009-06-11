@@ -28,7 +28,8 @@ import java.nio.ByteBuffer;
 public class LooseStorageNodeWritableChannelIntegrationTest extends AbstractLooseStorageNodeChannelIntegrationTest {
     @Test
     public void testWrite() throws IOException {
-        LooseStorageNodeWritableChannel channel = new LooseStorageNodeWritableChannel(storageLayoutMock, objectName);
+        LooseStorageNodeWritableChannel channel
+                = new LooseStorageNodeWritableChannel(storageLayoutMock, storageConfiguration, objectName);
         Assert.assertTrue("Channel should be open", channel.isOpen());
         Assert.assertEquals(testData.length, channel.write(ByteBuffer.wrap(testData)));
         channel.close();
@@ -43,7 +44,8 @@ public class LooseStorageNodeWritableChannelIntegrationTest extends AbstractLoos
     public void testWriteWithExistingObjectDirectory() throws IOException {
         File objectDir = new File(objectsDir, objectName.substring(0, 2));
         Assert.assertTrue(objectDir.mkdir());
-        LooseStorageNodeWritableChannel channel = new LooseStorageNodeWritableChannel(storageLayoutMock, objectName);
+        LooseStorageNodeWritableChannel channel = new LooseStorageNodeWritableChannel(storageLayoutMock,
+                storageConfiguration, objectName);
         channel.write(ByteBuffer.wrap(testData));
         channel.close();
     }

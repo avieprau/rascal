@@ -26,6 +26,4 @@ public interface LooseStorageLayout extends FileSystemStorageLayout {
     File getObjectDirForName(String objectName);
 
     File getObjectFileForName(String objectName);
-
-    int getLooseCompressionLevel(); // TODO: Move to some configuration abstraction
 }

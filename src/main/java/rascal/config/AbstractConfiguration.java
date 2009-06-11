@@ -16,22 +16,22 @@
 
 package rascal.config;
 
-public abstract class AbstractConfiguration {
+public abstract class AbstractConfiguration implements Configuration {
     private ConfigurationSource configurationSource;
 
     protected AbstractConfiguration(ConfigurationSource configurationSource) {
         this.configurationSource = configurationSource;
     }
 
-    protected String getStringProperty(String name) throws ConfigurationPropertyNotFoundException {
-        return null;
+    protected String getStringProperty(String key) throws ConfigurationPropertyNotFoundException {
+        return configurationSource.getString(key);
     }
 
-    protected int getIntegerProperty(String name) throws ConfigurationPropertyNotFoundException {
-        return Integer.getInteger(getStringProperty(name));
+    protected int getIntegerProperty(String key) throws ConfigurationPropertyNotFoundException {
+        return configurationSource.getInteger(key);
     }
 
-    protected boolean getBooleanProperty(String name) throws ConfigurationPropertyNotFoundException {
-        return Boolean.getBoolean(getStringProperty(name));
+    protected boolean getBooleanProperty(String key) throws ConfigurationPropertyNotFoundException {
+        return configurationSource.getBoolean(key);
     }
 }

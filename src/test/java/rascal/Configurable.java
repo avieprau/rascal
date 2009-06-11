@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 
-package rascal.storage;
+package rascal;
 
-import java.io.File;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class DefaultFileSystemStorageLayout implements FileSystemStorageLayout {
-    private static final String REPOSITORY_DIR_NAME = ".git";
-
-    private static final String CONFIGURATION_FILE_NAME = "config";
-
-    public File getRepositoryDir() {
-        return new File(REPOSITORY_DIR_NAME);
-    }
-
-    public File getConfigurationFile() {
-        return new File(getRepositoryDir(), CONFIGURATION_FILE_NAME);
-    }
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD})
+public @interface Configurable {
+    String value() default "";
 }
