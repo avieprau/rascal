@@ -30,6 +30,7 @@ import rascal.object.source.ObjectSource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 public class LooseStorageIntegrationTest extends AbstractLooseStorageConfigurationDependentIntegrationTest {
     private static final String OBJECT_NAME = "243be0d945ba35001a4cfb3ebc4560b22c0e9e2b";
@@ -70,7 +71,7 @@ public class LooseStorageIntegrationTest extends AbstractLooseStorageConfigurati
         File testFile = new File(tempDir, "test");
         FileUtils.writeByteArrayToFile(testFile, testData);
         ObjectSource source = new FileBlobSource(testFile);
-        storage.addObject(source);
+        storage.addObjects(Arrays.asList(source));
         File objectDir = new File(objectsDir, OBJECT_NAME.substring(0, 2));
         Assert.assertTrue("Object directory should exist", objectDir.isDirectory());
         File addedTestFile = new File(objectDir, OBJECT_NAME.substring(2));

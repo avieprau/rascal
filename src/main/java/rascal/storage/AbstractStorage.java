@@ -24,6 +24,7 @@ import rascal.object.source.ObjectSource;
 
 import java.io.IOException;
 import java.nio.channels.WritableByteChannel;
+import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
     private ObjectNameResolver objectNameResolver;
@@ -40,10 +41,16 @@ public abstract class AbstractStorage implements Storage {
         return getObjectFactory().createObject(name);
     }
 
-    public void addObject(ObjectSource source) throws IOException {
+    protected void addObject(ObjectSource source) throws IOException {
         String objectName = objectNameResolver.getObjectName(source);
         WritableByteChannel channel = getWritableChannelFactory(objectName).createChannel();
         source.copyTo(channel);
         channel.close();
+    }
+
+    public void addObjects(List<ObjectSource> sources) throws IOException {
+        for (ObjectSource source : sources) {
+            addObject(source);
+        }
     }
 }

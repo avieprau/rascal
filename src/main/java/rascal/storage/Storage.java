@@ -21,9 +21,10 @@ import rascal.object.GitObject;
 import rascal.object.source.ObjectSource;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface Storage {
     GitObject getObject(String name) throws IOException, CorruptedObjectException;
 
-    void addObject(ObjectSource source) throws IOException;
+    void addObjects(List<ObjectSource> sources) throws IOException;
 }

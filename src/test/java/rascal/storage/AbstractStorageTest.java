@@ -25,10 +25,10 @@ import rascal.object.name.ObjectNameResolver;
 import rascal.object.source.ObjectSource;
 
 import java.nio.channels.WritableByteChannel;
+import java.util.List;
+import java.util.ArrayList;
 
 public abstract class AbstractStorageTest extends AbstractTest {
-    protected ObjectSource sourceMock;
-
     protected ObjectNameResolver objectNameResolverMock;
 
     protected ReadableChannelFactory readableChannelFactoryMock;
@@ -44,7 +44,6 @@ public abstract class AbstractStorageTest extends AbstractTest {
     @Before
     public void setUpMocks() throws Exception {
         objectNameResolverMock = context.mock(ObjectNameResolver.class);
-        sourceMock = context.mock(ObjectSource.class);
         readableChannelFactoryMock = context.mock(ReadableChannelFactory.class);
         writableChannelFactoryMock = context.mock(WritableChannelFactory.class);
         objectFactoryMock = context.mock(ObjectFactory.class);
@@ -60,9 +59,8 @@ public abstract class AbstractStorageTest extends AbstractTest {
         getStorage().getObject(OBJECT_NAME);
     }
 
-    @Test
-    public void testAddObject() throws Exception {
-        final WritableByteChannel storageChannelMock = context.mock(WritableByteChannel.class);
+    private void addObjectExpectation(final ObjectSource sourceMock,
+                                      final WritableByteChannel storageChannelMock) throws Exception {
         context.checking(new Expectations() {
             {
                 oneOf(objectNameResolverMock).getObjectName(sourceMock);
@@ -76,6 +74,36 @@ public abstract class AbstractStorageTest extends AbstractTest {
                 oneOf(storageChannelMock).close();
             }
         });
+
+    }
+
+    @Test
+    public void testAddObject() throws Exception {
+        final WritableByteChannel storageChannelMock = context.mock(WritableByteChannel.class);
+        final ObjectSource sourceMock = context.mock(ObjectSource.class);
+        context.checking(new Expectations() {
+            {
+                addObjectExpectation(sourceMock, storageChannelMock);
+            }
+        });
         getStorage().addObject(sourceMock);
+    }
+
+    @Test
+    public void testAddObjects() throws Exception {
+        final int OBJECTS_NUMBER = 5;
+        final List<ObjectSource> sourceMocks = new ArrayList<ObjectSource>();
+        for (int i = 0; i < OBJECTS_NUMBER; i++) {
+            sourceMocks.add(context.mock(ObjectSource.class, "objectSource" + i));
+        }
+        context.checking(new Expectations() {
+            {
+                for (int i = 0; i < sourceMocks.size(); i++) {
+                    ObjectSource sourceMock = sourceMocks.get(i);
+                    addObjectExpectation(sourceMock, context.mock(WritableByteChannel.class, "storageChannelMock" + i));
+                }
+            }
+        });
+        getStorage().addObjects(sourceMocks);
     }
 }
